@@ -24,8 +24,8 @@ import Base from '/imports/startup/client/base';
 import JoinHandler from '/imports/ui/components/join-handler/component';
 import AuthenticatedHandler from '/imports/ui/components/authenticated-handler/component';
 import Subscriptions from '/imports/ui/components/subscriptions/component';
-import {Provider} from "react-redux";
-import store from "../imports/redux/store";
+import { Provider } from 'react-redux';
+import store from '../imports/redux/store';
 
 Meteor.startup(() => {
   // Logs all uncaught exceptions to the client logger
@@ -52,15 +52,15 @@ Meteor.startup(() => {
 
   // TODO make this a Promise
   render(
-      <Provider store={store}>
-    <JoinHandler>
-      <AuthenticatedHandler>
-        <Subscriptions>
-          <Base />
-        </Subscriptions>
-      </AuthenticatedHandler>
-    </JoinHandler>
-          </Provider>,
+    <Provider store={store}>
+      <JoinHandler>
+        <AuthenticatedHandler>
+          <Subscriptions>
+            <Base />
+          </Subscriptions>
+        </AuthenticatedHandler>
+      </JoinHandler>
+    </Provider>,
     document.getElementById('app'),
   );
 });

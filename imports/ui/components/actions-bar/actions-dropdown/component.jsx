@@ -206,17 +206,9 @@ class ActionsDropdown extends PureComponent {
     return (
       <Dropdown ref={(ref) => { this._dropdown = ref; }}>
         <DropdownTrigger tabIndex={0} accessKey={OPEN_ACTIONS_AK}>
-          <Button
-            hideLabel
-            aria-label={intl.formatMessage(intlMessages.actionsLabel)}
-            className={styles.button}
-            label={intl.formatMessage(intlMessages.actionsLabel)}
-            icon="plus"
-            color="primary"
-            size="lg"
-            circle
-            onClick={() => null}
-          />
+          <figure className="image is-44x44 action-more">
+            <img src="img/MoreIcon.png" className="is-rounded" />
+          </figure>
         </DropdownTrigger>
         <DropdownContent placement="top left">
           <DropdownList>

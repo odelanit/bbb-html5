@@ -68,6 +68,7 @@ export default class Media extends Component {
         id="container"
         className={cx(styles.container)}
         ref={this.refContainer}
+        style={{ height: '100%' }}
       >
         <div
           className={!swapLayout ? contentClassName : overlayClassName}
