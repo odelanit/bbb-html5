@@ -1,0 +1,50 @@
+<!--
+BigBlueButton open source conferencing system - http://www.bigbluebutton.org/
+
+Copyright (c) 2019 BigBlueButton Inc. and by respective authors (see below).
+
+This program is free software; you can redistribute it and/or modify it under the
+terms of the GNU Lesser General Public License as published by the Free Software
+Foundation; either version 3.0 of the License, or (at your option) any later
+version.
+
+BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along
+with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>LetsMeet</title>
+    <link href="vendor/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+    <link href="css/bulma.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <script>
+        document.addEventListener('gesturestart', function (e) {
+            e.preventDefault();
+        });
+    </script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/letsmeet.min.js"></script>
+
+    <script src="compatibility/adapter.js?v=VERSION" language="javascript"></script>
+    <script src="compatibility/sip.js?v=VERSION" language="javascript"></script>
+    <script src="compatibility/kurento-utils.js?v=VERSION" language="javascript"></script>
+</head>
+<body style="background-color: #06172A">
+  <div id="app" role="document"></div>
+  <audio id="remote-media" autoplay>
+  </audio>
+</body>

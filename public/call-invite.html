@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>LetsMeet - Contacts</title>
+
+    <!-- Custom fonts-->
+    <link href="vendor/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+
+    <link href="css/letsmeet.min.css" rel="stylesheet">
+    <link href="css/style2.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-default sidebar sidebar-dark accordion sidebar_dark toggled"
+        id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <div class="sidebar-brand d-flex align-items-center">
+            <a class="d-flex align-items-center" href="index.html">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </a>
+        </div>
+
+        <!-- Divider -->
+        <!-- <hr class="sidebar-divider my-0"> -->
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item ">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+            </a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="#">
+                <i class="fa fa-phone"></i>
+            </a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link" href="#">
+                <i class="far fa-calendar-alt"></i>
+            </a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link" href="#">
+                <i class="far fa-address-book"></i>
+            </a>
+        </li>
+
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <!-- <div class="text-center d-none d-md-inline">
+          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div> -->
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light topbar static-top call-m">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+
+                <i class="fas fa-search fa-fw p-r8"></i>
+
+                <small class="new-color">Search for or type a word</small>
+
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+
+
+                    <!-- Topbar Search -->
+                    <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search pt-3">
+                      <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search fa-sm"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form> -->
+
+
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="img-profile rounded-circle mr-2" src="img/prof3.png">
+
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Profile
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-list fa-sm fa-fw mr-21 text-gray-400"></i>
+                                Activity Log
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid call-m-s">
+
+                <div class="row">
+
+                    <!-- Area Chart -->
+                    <div class="col-xl-9 col-lg-9">
+                        <!-- Project Card Example -->
+                        <div class="card shadow mb-4 call-meat">
+
+                            <div class="card-body contacts-page">
+                                <div class="row contact-row contact-r">
+                                    <div class="col-md-4">
+                                        <div class="card profile">
+                                            <div class="desc">
+                                                <img src="img/prof1.png" alt="John" style="width:100%">
+                                                <div class="m-e"></div>
+                                                <h3>John Doe</h3>
+                                                <p class="title">Software Developer</p>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="card profile profile-m">
+                                            <div class="desc">
+                                                <img src="img/prof1.png" alt="John" style="width:100%">
+                                                <div class="m-eo"></div>
+                                                <h3>John Doe</h3>
+                                                <p class="title">Software Developer</p>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="card profile">
+                                            <div class="desc">
+                                                <img src="img/prof1.png" alt="John" style="width:100%">
+                                                <div class="m-e"></div>
+                                                <h3>John Doe</h3>
+                                                <p class="title">Software Developer</p>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="card profile">
+                                            <div class="desc">
+                                                <img src="img/prof1.png" alt="John" style="width:100%">
+                                                <div class="m-e"></div>
+                                                <h3>John Doe</h3>
+                                                <p class="title">Software Developer</p>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card profile">
+                                            <div class="desc">
+                                                <img src="img/prof1.png" alt="John" style="width:100%">
+                                                <div class="m-e"></div>
+                                                <h3>John Doe</h3>
+                                                <p class="title">Software Developer</p>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card profile profile-m">
+                                            <div class="desc">
+                                                <img src="img/prof1.png" alt="John" style="width:100%">
+                                                <div class="m-eo"></div>
+                                                <h3>John Doe</h3>
+                                                <p class="title">Software Developer</p>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="row call-m callmeating">
+                                    <div class="col-md-6 text-center">
+                                        <div class="meeting-c">
+                                            <span>9:28</span>
+                                        </div>
+
+                                        <figure class="meeting-c">
+                                            <img src="img/Video-Enable.png" class="mhide" alt="" title=""
+                                                 style="background: #0c4a94;border-radius: 50%;padding: 8px;"/>
+                                            <img src="img/MuteIcon.png" class="mhide" alt="" title=""
+                                                 style="background: #0c4a94;border-radius: 50%;padding: 8px;width: 42px;height: 42px;"/>
+                                            <img src="img/ShareScreen.png" class="mhide" alt="" title=""
+                                                 style="background: #0c4a94;border-radius: 50%;padding: 8px;"/>
+                                            <img src="img/Hand.png" alt="" class="mhide" title=""
+                                                 style="background: #0c4a94;border-radius: 50%;padding: 8px; width: 42px;height: 42px;"/>
+                                            <img src="img/MessageIcon.png" class="mhide" alt="" title=""
+                                                 style="background: #0072F8;border-radius: 50%;padding: 8px; width: 42px;height: 42px;"/>
+                                            <img src="img/MoreIcon.png" class="mhide" alt="" title=""
+                                                 style="border-radius: 50%;padding: 8px; width: 42px;height: 42px;"/>
+                                            <img src="img/CallHang.png" class="mhide" alt="" title=""
+                                                 style="background: red;border-radius: 50%;padding: 8px; width: 42px;height: 42px;"/>
+                                        </figure>
+
+                                    </div>
+                                    <div class="col-md-6 text-right mobile-left">
+                                        <figure class="meeting-c">
+                                            <img src="img/TeamAdd.png" class="call-mo" alt="" title=""
+                                                 style="background: #0c4a94;border-radius: 50%;padding: 8px;"/>
+                                            <img src="img/Profile10.png" class="call-mo" alt="" title=""
+                                                 style="background: #0c4a94;border-radius: 50%;"/>
+                                            <img src="img/Profile10.png" class="call-mo" alt="" title=""
+                                                 style="background: #0c4a94;border-radius: 50%;"/>
+                                            <img src="img/Profile10.png" class="call-mo" alt="" title=""
+                                                 style="background: #0c4a94;border-radius: 50%;"/>
+
+                                            <div class="call-meati call-mo">+5</div>
+                                        </figure>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3">
+                        <!-- Chat Box-->
+
+                        <div class="px-4 py-5 chat-box chat-box-h bg-white">
+                            <h3 class="mt-10">Invite People</h3>
+                            <div class="input-group call-inv">
+                <span class="input-group-prepend">
+                    <div class="input-group-text bg-transparent border-right-0 call-sear"><i
+                            class="fa fa-search"></i></div>
+                </span>
+                                <input class="form-control py-2 border-left-0 border call-invi" type="search"
+                                       value="Invite someone" id="example-search-input">
+
+                            </div>
+                            <!-- Sender Message-->
+                            <div class="media w-50 mb-3 call-in-p"><img
+                                    src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                                    alt="user" width="50" class="rounded-circle">
+                                <div class="media-body ml-3">
+                                    <div class="rounded py-2 mb-2">
+
+                                        <p class="small text-muted mr0">Julian Mendez</p>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <p class="text-small mb-0 text-muted">Sr. UX Designer, New York</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="checkbox" name="vehicle3" value="Boat" checked>
+                                                <label for="vehicle3"> Invite</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="media w-50 mb-3 call-in-p"><img
+                                    src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                                    alt="user" width="50" class="rounded-circle">
+                                <div class="media-body ml-3">
+                                    <div class="rounded py-2 mb-2">
+
+                                        <p class="small text-muted mr0">Julian Mendez</p>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <p class="text-small mb-0 text-muted">Sr. UX Designer, New York</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="checkbox" name="vehicle3" value="Boat" checked>
+                                                <label for="vehicle3"> Invite</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="media w-50 mb-3 call-in-p"><img
+                                    src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                                    alt="user" width="50" class="rounded-circle">
+                                <div class="media-body ml-3">
+                                    <div class="rounded py-2 mb-2">
+
+                                        <p class="small text-muted mr0">Julian Mendez</p>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <p class="text-small mb-0 text-muted">Sr. UX Designer, New York</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="checkbox" name="vehicle3" value="Boat" checked>
+                                                <label for="vehicle3"> Invite</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="media w-50 mb-3 call-in-p"><img
+                                    src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                                    alt="user" width="50" class="rounded-circle">
+                                <div class="media-body ml-3">
+                                    <div class="rounded py-2 mb-2">
+
+                                        <p class="small text-muted mr0">Julian Mendez</p>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <p class="text-small mb-0 text-muted">Sr. UX Designer, New York</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="checkbox" name="vehicle3" value="Boat" checked>
+                                                <label for="vehicle3"> Invite</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="media w-50 mb-3 call-in-p"><img
+                                    src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                                    alt="user" width="50" class="rounded-circle">
+                                <div class="media-body ml-3">
+                                    <div class="rounded py-2 mb-2">
+
+                                        <p class="small text-muted mr0">Julian Mendez</p>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <p class="text-small mb-0 text-muted">Sr. UX Designer, New York</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="checkbox" name="vehicle3" value="Boat">
+                                                <label for="vehicle3"> Invite</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="media w-50 mb-3 call-in-p"><img
+                                    src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                                    alt="user" width="50" class="rounded-circle">
+                                <div class="media-body ml-3">
+                                    <div class="rounded py-2 mb-2">
+
+                                        <p class="small text-muted mr0">Julian Mendez</p>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <p class="text-small mb-0 text-muted">Sr. UX Designer, New York</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="checkbox" name="vehicle3" value="Boat" checked>
+                                                <label for="vehicle3"> Invite</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="media w-50 mb-3 call-in-p"><img
+                                    src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                                    alt="user" width="50" class="rounded-circle">
+                                <div class="media-body ml-3">
+                                    <div class="rounded py-2 mb-2">
+
+                                        <p class="small text-muted mr0">Julian Mendez</p>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <p class="text-small mb-0 text-muted">Sr. UX Designer, New York</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="checkbox" name="vehicle3" value="Boat">
+                                                <label for="vehicle3"> Invite</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="media w-50 mb-3 call-in-p"><img
+                                    src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                                    alt="user" width="50" class="rounded-circle">
+                                <div class="media-body ml-3">
+                                    <div class="rounded py-2 mb-2">
+
+                                        <p class="small text-muted mr0">Julian Mendez</p>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <p class="text-small mb-0 text-muted">Sr. UX Designer, New York</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="checkbox" name="vehicle3" value="Boat">
+                                                <label for="vehicle3"> Invite</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="media w-50 mb-3 call-in-p"><img
+                                    src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                                    alt="user" width="50" class="rounded-circle">
+                                <div class="media-body ml-3">
+                                    <div class="rounded py-2 mb-2">
+
+                                        <p class="small text-muted mr0">Julian Mendez</p>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <p class="text-small mb-0 text-muted">Sr. UX Designer, New York</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="checkbox" name="vehicle3" value="Boat">
+                                                <label for="vehicle3"> Invite</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; LetsMeet 2020</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts -->
+<script src="js/letsmeet.min.js"></script>
+
+
+<!-- Page level plugins -->
+<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="js/demo/datatables-demo.js"></script>
+
+
+</body>
+
+</html>

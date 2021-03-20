@@ -1,0 +1,139 @@
+html, body {
+    background: #0d3660;
+    overflow-y: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    width: 5px;
+    background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+    width: 1em;
+    background-color: #ddd;
+    outline: 1px solid slategrey;
+    border-radius: 1rem;
+}
+
+main {
+    position: relative;
+}
+
+.wrapper .navbar {
+    height: 4.375rem;
+}
+
+.wrapper .container.main {
+    padding-top: 4.375rem;
+    padding-bottom: 60px;
+    height: 100vh;
+}
+
+.wrapper .meeting-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper .meeting-media {
+    flex: 1 100%;
+}
+
+.wrapper .meeting-sidebar {
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background: white;
+}
+
+.navbar.call-m {
+    background: #012147;
+}
+
+.navbar.call-m .navbar-item.has-dropdown:hover .navbar-link {
+    background: #012147;
+}
+
+.call-m {
+    background: #012147;
+}
+
+.footer.is-fixed-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 1rem 2rem;
+}
+
+.image.is-44x44 {
+    width: 44px;
+    height: 44px;
+}
+
+.meeting-actions, .meeting-c {
+    display: flex;
+    margin: 15px;
+}
+
+.meeting-c {
+    justify-content: flex-end;
+}
+
+.meeting-actions {
+    justify-content: center;
+    align-items: center;
+}
+
+.meeting-c .image {
+    padding: 8px;
+    background: #0c4a94;
+    border-radius: 50%;
+    margin-right: .5rem;
+}
+
+.meeting-c .image.avatar {
+    padding: 0;
+}
+
+.meeting-c .image:last-child {
+    margin-right: 0;
+}
+
+.meeting-actions > * {
+    margin-right: 4px;
+}
+
+.meeting-actions > *:last-child {
+    margin-right: 0;
+}
+
+.meeting-actions .image {
+    padding: 8px;
+    border-radius: 50%;
+    background: #0c4a94;
+    cursor: pointer;
+}
+
+.meeting-actions button {
+    background: #0c4a94;
+    border-radius: 50%;
+}
+
+.meeting-actions button span {
+    border: unset !important;
+}
+
+.call-end.image {
+    background: red;
+}
+
+.action-more.image {
+    background: transparent;
+}
+
+.meeting-c .image {
+    cursor: pointer;
+}
