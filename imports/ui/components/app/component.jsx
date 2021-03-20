@@ -24,6 +24,7 @@ import MediaService from '/imports/ui/components/media/service';
 import ManyWebcamsNotifier from '/imports/ui/components/video-provider/many-users-notify/container';
 import { styles } from './styles';
 import { setChatBox, setInviteBox, setPanelOpened } from '/imports/redux/actions';
+import UserListContainer from '../lm-user-list/container';
 
 const MOBILE_MEDIA = 'only screen and (max-width: 40em)';
 const APP_CONFIG = Meteor.settings.public.app;
@@ -103,13 +104,19 @@ class App extends Component {
       enableResize: !window.matchMedia(MOBILE_MEDIA).matches,
     };
 
-    this.handleWindowResize = throttle(this.handleWindowResize).bind(this);
+    this.handleWindowResize = throttle(this.handleWindowResize)
+      .bind(this);
     this.shouldAriaHide = this.shouldAriaHide.bind(this);
   }
 
   componentDidMount() {
     const {
-      locale, notify, intl, validIOSVersion, startBandwidthMonitoring, handleNetworkConnection,
+      locale,
+      notify,
+      intl,
+      validIOSVersion,
+      startBandwidthMonitoring,
+      handleNetworkConnection,
     } = this.props;
     const BROWSER_RESULTS = browser();
     const isMobileBrowser = BROWSER_RESULTS.mobile || BROWSER_RESULTS.os.includes('Android');
@@ -124,7 +131,9 @@ class App extends Component {
       body.classList.add(`browser-${BROWSER_RESULTS.name}`);
     }
     if (BROWSER_RESULTS && BROWSER_RESULTS.os) {
-      body.classList.add(`os-${BROWSER_RESULTS.os.split(' ').shift().toLowerCase()}`);
+      body.classList.add(`os-${BROWSER_RESULTS.os.split(' ')
+        .shift()
+        .toLowerCase()}`);
     }
 
     if (!validIOSVersion()) {
@@ -156,12 +165,16 @@ class App extends Component {
 
   componentDidUpdate(prevProps) {
     const {
-      meetingMuted, notify, currentUserEmoji, intl, hasPublishedPoll,
+      meetingMuted,
+      notify,
+      currentUserEmoji,
+      intl,
+      hasPublishedPoll,
     } = this.props;
 
     if (prevProps.currentUserEmoji.status !== currentUserEmoji.status) {
       const formattedEmojiStatus = intl.formatMessage({ id: `app.actionsBar.emojiMenu.${currentUserEmoji.status}Label` })
-                || currentUserEmoji.status;
+        || currentUserEmoji.status;
 
       notify(
         currentUserEmoji.status === 'none'
@@ -207,13 +220,19 @@ class App extends Component {
   }
 
   shouldAriaHide() {
-    const { openPanel, isPhone } = this.props;
+    const {
+      openPanel,
+      isPhone
+    } = this.props;
     return openPanel !== '' && (isPhone || isLayeredView.matches);
   }
 
   renderPanel() {
     const { enableResize } = this.state;
-    const { openPanel, isRTL } = this.props;
+    const {
+      openPanel,
+      isRTL
+    } = this.props;
 
     return (
       <PanelManager
@@ -233,9 +252,9 @@ class App extends Component {
     if (!navbar) return null;
 
     return (
-            <>
-              {navbar}
-            </>
+      <>
+        {navbar}
+      </>
     );
   }
 
@@ -292,16 +311,19 @@ class App extends Component {
     if (!actionsbar) return null;
 
     return (
-            <>
-              {actionsbar}
-            </>
+      <>
+        {actionsbar}
+      </>
     );
   }
 
   renderActivityCheck() {
     const { User } = this.props;
 
-    const { inactivityCheck, responseDelay } = User;
+    const {
+      inactivityCheck,
+      responseDelay
+    } = User;
 
     return (inactivityCheck ? (
       <ActivityCheckContainer
@@ -311,7 +333,10 @@ class App extends Component {
   }
 
   renderUserInformation() {
-    const { UserInfo, User } = this.props;
+    const {
+      UserInfo,
+      User
+    } = this.props;
 
     return (UserInfo.length > 0 ? (
       <UserInfoContainer
@@ -323,14 +348,17 @@ class App extends Component {
 
   render() {
     const {
-      customStyle, customStyleUrl, openPanel, users,
+      customStyle,
+      customStyleUrl,
+      openPanel,
+      users,
     } = this.props;
     return (
       <main>
         {this.renderActivityCheck()}
         {this.renderUserInformation()}
-        <BannerBarContainer />
-        <NotificationsBarContainer />
+        <BannerBarContainer/>
+        <NotificationsBarContainer/>
         <div id="wrapper" className="wrapper">
           {this.renderNavBar()}
           <div className="container is-fluid main">
@@ -345,462 +373,451 @@ class App extends Component {
                   <div className="columns">
                     <div className="column">
                       <div className="meeting-actions">
-                            <div className="px-4">9:28</div>
-                            {this.renderActionsBar()}
-                          </div>
+                        <div className="px-4">9:28</div>
+                        {this.renderActionsBar()}
+                      </div>
                     </div>
                     <div className="column">
-                      <div className="meeting-c">
-                            <figure className="image is-44x44" onClick={this.handleInviteClicked}>
-                                <img src="img/TeamAdd.png" />
-                              </figure>
-                            {
-                                                    users.map((user, index) => (
-                                                      <figure className="image is-44x44 avatar" key={index}>
-                                                        <img src="img/profile-pic.jpg" className="is-rounded" />
-                                                      </figure>
-                                                    ))
-                                                }
-                          </div>
+                      <UserListContainer/>
                     </div>
                   </div>
                 </div>
               </div>
               {this.props.isPanelOpened && (
-              <div className="column">
-                <div className="meeting-sidebar">
-                  {this.props.isChatBox && (
-                                            <>
-                                              <div className="px-4 py-5 ">
-                                                <h3 className="mt-10">Meeting Chat</h3>
-                                                <div className="media w-50 mb-3">
-                                                  <img
-                                                    src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-                                                    alt="user"
-                                                    width="50"
-                                                    className="rounded-circle"
-                                                  />
-                                                  <div className="media-body ml-3">
-                                                    <div className="bg-light rounded py-2 px-3 mb-2">
-                                                      <p className="text-small mb-0 text-muted">
-Test which is
-                                                                    a new approach
-                                                                    all
-                                                                    solutions
-                                                      </p>
-                                                    </div>
-                                                    <p className="small text-muted">12:00 PM | Aug 13</p>
-                                                  </div>
-                                                </div>
-
-                                                <div className="media w-50 ml-auto mb-3">
-                                                  <div className="media-body">
-                                                    <div className="bg-primary rounded py-2 px-3 mb-2">
-                                                      <p className="text-small mb-0 text-white">
-Test which is
-                                                                    a new approach
-                                                                    to have all
-                                                                    solutions
-                                                      </p>
-                                                    </div>
-                                                    <p className="small text-muted">12:00 PM | Aug 13</p>
-                                                  </div>
-                                                </div>
-
-                                                <div className="media w-50 mb-3">
-                                                  <img
-                                                    src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-                                                    alt="user"
-                                                    width="50"
-                                                    className="rounded-circle"
-                                                  />
-                                                  <div className="media-body ml-3">
-                                                    <div className="bg-light rounded py-2 px-3 mb-2">
-                                                      <p className="text-small mb-0 text-muted">
-Test, which is
-                                                                    a new approach
-                                                                    to have
-                                                      </p>
-                                                    </div>
-                                                    <p className="small text-muted">12:00 PM | Aug 13</p>
-                                                  </div>
-                                                </div>
-
-                                                <div className="media w-50 ml-auto mb-3">
-                                                  <div className="media-body">
-                                                    <div className="bg-primary rounded py-2 px-3 mb-2">
-                                                      <p className="text-small mb-0 text-white">
-Apollo
-                                                                    University, Delhi,
-                                                                    India Test
-                                                      </p>
-                                                    </div>
-                                                    <p className="small text-muted">12:00 PM | Aug 13</p>
-                                                  </div>
-                                                </div>
-
-                                                <div className="media w-50 mb-3">
-                                                  <img
-                                                    src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-                                                    alt="user"
-                                                    width="50"
-                                                    className="rounded-circle"
-                                                  />
-                                                  <div className="media-body ml-3">
-                                                    <div className="bg-light rounded py-2 px-3 mb-2">
-                                                      <p className="text-small mb-0 text-muted">
-Test, which is
-                                                                    a new
-                                                                    approach
-                                                      </p>
-                                                    </div>
-                                                    <p className="small text-muted">12:00 PM | Aug 13</p>
-                                                  </div>
-                                                </div>
-
-                                                <div className="media w-50 ml-auto mb-3">
-                                                  <div className="media-body">
-                                                    <div className="bg-primary rounded py-2 px-3 mb-2">
-                                                      <p className="text-small mb-0 text-white">
-Apollo
-                                                                    University, Delhi,
-                                                                    India Test
-                                                      </p>
-                                                    </div>
-                                                    <p className="small text-muted">12:00 PM | Aug 13</p>
-                                                  </div>
-                                                </div>
-
-                                              </div>
-                                              <form action="#" className="bg-light">
-                                                <div className="input-group">
-                                                  <input
-                                                    type="text"
-                                                    placeholder="Type a message"
-                                                    aria-describedby="button-addon2"
-                                                    className="form-control rounded-0 border-0 py-4 bg-light"
-                                                  />
-                                                  <div className="input-group-append">
-                                                    <button
-                                                      id="button-addon2"
-                                                      type="submit"
-                                                      className="btn btn-link"
-                                                    >
-                                                      <i className="fa fa-paper-plane" />
-                                                    </button>
-                                                  </div>
-                                                </div>
-                                              </form>
-                                            </>
-                  )}
-                  {this.props.isInviteBox && (
-                  <div className="px-4 py-5 chat-box chat-box-h bg-white">
-                          <h3 className="mt-10">Invite People</h3>
-                          <div className="input-group call-inv">
-                            <div className="input-group-prepend">
-                                  <div
-                                    className="input-group-text bg-transparent border-right-0 call-sear"
-                                  >
-                                    <i className="fa fa-search" />
-                                  </div>
-                                </div>
-                            <input
-                                  className="form-control py-2 border-left-0 border call-invi"
-                                  type="search"
-                                  value="Invite someone"
-                                  id="example-search-input"
-                                />
-
-                          </div>
-                          <div className="media w-50 mb-3 call-in-p">
+                <div className="column">
+                  <div className="meeting-sidebar">
+                    {this.props.isChatBox && (
+                      <>
+                        <div className="px-4 py-5 ">
+                          <h3 className="mt-10">Meeting Chat</h3>
+                          <div className="media w-50 mb-3">
                             <img
-                                  src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-                                  alt="user"
-                                  width="50"
-                                  className="rounded-circle"
-                                />
+                              src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                              alt="user"
+                              width="50"
+                              className="rounded-circle"
+                            />
                             <div className="media-body ml-3">
-                                  <div className="rounded py-2 mb-2">
-
-                                    <p className="small text-muted mr0">Julian Mendez</p>
-                                    <div className="row">
-                                          <div className="col-md-8">
-                                            <p className="text-small mb-0 text-muted">
-Sr. UX
-                                                                        Designer, New York
-                                                </p>
-                                          </div>
-                                          <div className="col-md-4">
-                                            <input
-                                                  type="checkbox"
-                                                  name="vehicle3"
-                                                  value="Boat"
-                                                />
-                                            <label htmlFor="vehicle3"> Invite</label>
-                                          </div>
-                                        </div>
-                                  </div>
-
-                                </div>
+                              <div className="bg-light rounded py-2 px-3 mb-2">
+                                <p className="text-small mb-0 text-muted">
+                                  Test which is
+                                  a new approach
+                                  all
+                                  solutions
+                                </p>
+                              </div>
+                              <p className="small text-muted">12:00 PM | Aug 13</p>
+                            </div>
                           </div>
 
-                          <div className="media w-50 mb-3 call-in-p">
-                            <img
-                                  src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-                                  alt="user"
-                                  width="50"
-                                  className="rounded-circle"
-                                />
-                            <div className="media-body ml-3">
-                                  <div className="rounded py-2 mb-2">
-
-                                    <p className="small text-muted mr0">Julian Mendez</p>
-                                    <div className="row">
-                                          <div className="col-md-8">
-                                            <p className="text-small mb-0 text-muted">
-Sr. UX
-                                                                        Designer, New York
-                                                </p>
-                                          </div>
-                                          <div className="col-md-4">
-                                            <input
-                                                  type="checkbox"
-                                                  name="vehicle3"
-                                                  value="Boat"
-                                                />
-                                            <label htmlFor="vehicle3"> Invite</label>
-                                          </div>
-                                        </div>
-                                  </div>
-
-                                </div>
+                          <div className="media w-50 ml-auto mb-3">
+                            <div className="media-body">
+                              <div className="bg-primary rounded py-2 px-3 mb-2">
+                                <p className="text-small mb-0 text-white">
+                                  Test which is
+                                  a new approach
+                                  to have all
+                                  solutions
+                                </p>
+                              </div>
+                              <p className="small text-muted">12:00 PM | Aug 13</p>
+                            </div>
                           </div>
 
-                          <div className="media w-50 mb-3 call-in-p">
+                          <div className="media w-50 mb-3">
                             <img
-                                  src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-                                  alt="user"
-                                  width="50"
-                                  className="rounded-circle"
-                                />
+                              src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                              alt="user"
+                              width="50"
+                              className="rounded-circle"
+                            />
                             <div className="media-body ml-3">
-                                  <div className="rounded py-2 mb-2">
-
-                                    <p className="small text-muted mr0">Julian Mendez</p>
-                                    <div className="row">
-                                          <div className="col-md-8">
-                                            <p className="text-small mb-0 text-muted">
-Sr. UX
-                                                                        Designer, New York
-                                                </p>
-                                          </div>
-                                          <div className="col-md-4">
-                                            <input
-                                                  type="checkbox"
-                                                  name="vehicle3"
-                                                  value="Boat"
-                                                />
-                                            <label htmlFor="vehicle3"> Invite</label>
-                                          </div>
-                                        </div>
-                                  </div>
-
-                                </div>
+                              <div className="bg-light rounded py-2 px-3 mb-2">
+                                <p className="text-small mb-0 text-muted">
+                                  Test, which is
+                                  a new approach
+                                  to have
+                                </p>
+                              </div>
+                              <p className="small text-muted">12:00 PM | Aug 13</p>
+                            </div>
                           </div>
 
-                          <div className="media w-50 mb-3 call-in-p">
-                            <img
-                                  src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-                                  alt="user"
-                                  width="50"
-                                  className="rounded-circle"
-                                />
-                            <div className="media-body ml-3">
-                                  <div className="rounded py-2 mb-2">
-
-                                    <p className="small text-muted mr0">Julian Mendez</p>
-                                    <div className="row">
-                                          <div className="col-md-8">
-                                            <p className="text-small mb-0 text-muted">
-Sr. UX
-                                                                        Designer, New York
-                                                </p>
-                                          </div>
-                                          <div className="col-md-4">
-                                            <input
-                                                  type="checkbox"
-                                                  name="vehicle3"
-                                                  value="Boat"
-                                                />
-                                            <label htmlFor="vehicle3"> Invite</label>
-                                          </div>
-                                        </div>
-                                  </div>
-
-                                </div>
+                          <div className="media w-50 ml-auto mb-3">
+                            <div className="media-body">
+                              <div className="bg-primary rounded py-2 px-3 mb-2">
+                                <p className="text-small mb-0 text-white">
+                                  Apollo
+                                  University, Delhi,
+                                  India Test
+                                </p>
+                              </div>
+                              <p className="small text-muted">12:00 PM | Aug 13</p>
+                            </div>
                           </div>
 
-                          <div className="media w-50 mb-3 call-in-p">
+                          <div className="media w-50 mb-3">
                             <img
-                                  src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-                                  alt="user"
-                                  width="50"
-                                  className="rounded-circle"
-                                />
+                              src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                              alt="user"
+                              width="50"
+                              className="rounded-circle"
+                            />
                             <div className="media-body ml-3">
-                                  <div className="rounded py-2 mb-2">
-
-                                    <p className="small text-muted mr0">Julian Mendez</p>
-                                    <div className="row">
-                                          <div className="col-md-8">
-                                            <p className="text-small mb-0 text-muted">
-Sr. UX
-                                                                        Designer, New York
-                                                </p>
-                                          </div>
-                                          <div className="col-md-4">
-                                            <input
-                                                  type="checkbox"
-                                                  name="vehicle3"
-                                                  value="Boat"
-                                                />
-                                            <label htmlFor="vehicle3"> Invite</label>
-                                          </div>
-                                        </div>
-                                  </div>
-
-                                </div>
+                              <div className="bg-light rounded py-2 px-3 mb-2">
+                                <p className="text-small mb-0 text-muted">
+                                  Test, which is
+                                  a new
+                                  approach
+                                </p>
+                              </div>
+                              <p className="small text-muted">12:00 PM | Aug 13</p>
+                            </div>
                           </div>
 
-                          <div className="media w-50 mb-3 call-in-p">
-                            <img
-                                  src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-                                  alt="user"
-                                  width="50"
-                                  className="rounded-circle"
-                                />
-                            <div className="media-body ml-3">
-                                  <div className="rounded py-2 mb-2">
-
-                                    <p className="small text-muted mr0">Julian Mendez</p>
-                                    <div className="row">
-                                          <div className="col-md-8">
-                                            <p className="text-small mb-0 text-muted">
-Sr. UX
-                                                                        Designer, New York
-                                                </p>
-                                          </div>
-                                          <div className="col-md-4">
-                                            <input
-                                                  type="checkbox"
-                                                  name="vehicle3"
-                                                  value="Boat"
-                                                />
-                                            <label htmlFor="vehicle3"> Invite</label>
-                                          </div>
-                                        </div>
-                                  </div>
-
-                                </div>
-                          </div>
-                          <div className="media w-50 mb-3 call-in-p">
-                            <img
-                                  src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-                                  alt="user"
-                                  width="50"
-                                  className="rounded-circle"
-                                />
-                            <div className="media-body ml-3">
-                                  <div className="rounded py-2 mb-2">
-
-                                    <p className="small text-muted mr0">Julian Mendez</p>
-                                    <div className="row">
-                                          <div className="col-md-8">
-                                            <p className="text-small mb-0 text-muted">
-Sr. UX
-                                                                        Designer, New York
-                                                </p>
-                                          </div>
-                                          <div className="col-md-4">
-                                            <input
-                                                  type="checkbox"
-                                                  name="vehicle3"
-                                                  value="Boat"
-                                                />
-                                            <label htmlFor="vehicle3"> Invite</label>
-                                          </div>
-                                        </div>
-                                  </div>
-
-                                </div>
-                          </div>
-                          <div className="media w-50 mb-3 call-in-p">
-                            <img
-                                  src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-                                  alt="user"
-                                  width="50"
-                                  className="rounded-circle"
-                                />
-                            <div className="media-body ml-3">
-                                  <div className="rounded py-2 mb-2">
-
-                                    <p className="small text-muted mr0">Julian Mendez</p>
-                                    <div className="row">
-                                          <div className="col-md-8">
-                                            <p className="text-small mb-0 text-muted">
-Sr. UX
-                                                                        Designer, New York
-                                                </p>
-                                          </div>
-                                          <div className="col-md-4">
-                                            <input
-                                                  type="checkbox"
-                                                  name="vehicle3"
-                                                  value="Boat"
-                                                />
-                                            <label htmlFor="vehicle3"> Invite</label>
-                                          </div>
-                                        </div>
-                                  </div>
-
-                                </div>
-                          </div>
-                          <div className="media w-50 mb-3 call-in-p">
-                            <img
-                                  src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-                                  alt="user"
-                                  width="50"
-                                  className="rounded-circle"
-                                />
-                            <div className="media-body ml-3">
-                                  <div className="rounded py-2 mb-2">
-
-                                    <p className="small text-muted mr0">Julian Mendez</p>
-                                    <div className="row">
-                                          <div className="col-md-8">
-                                            <p className="text-small mb-0 text-muted">
-Sr. UX
-                                                                        Designer, New York
-                                                </p>
-                                          </div>
-                                          <div className="col-md-4">
-                                            <input
-                                                  type="checkbox"
-                                                  name="vehicle3"
-                                                  value="Boat"
-                                                />
-                                            <label htmlFor="vehicle3"> Invite</label>
-                                          </div>
-                                        </div>
-                                  </div>
-
-                                </div>
+                          <div className="media w-50 ml-auto mb-3">
+                            <div className="media-body">
+                              <div className="bg-primary rounded py-2 px-3 mb-2">
+                                <p className="text-small mb-0 text-white">
+                                  Apollo
+                                  University, Delhi,
+                                  India Test
+                                </p>
+                              </div>
+                              <p className="small text-muted">12:00 PM | Aug 13</p>
+                            </div>
                           </div>
 
                         </div>
-                  )}
+                        <form action="#" className="bg-light">
+                          <div className="input-group">
+                            <input
+                              type="text"
+                              placeholder="Type a message"
+                              aria-describedby="button-addon2"
+                              className="form-control rounded-0 border-0 py-4 bg-light"
+                            />
+                            <div className="input-group-append">
+                              <button
+                                id="button-addon2"
+                                type="submit"
+                                className="btn btn-link"
+                              >
+                                <i className="fa fa-paper-plane"/>
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </>
+                    )}
+                    {this.props.isInviteBox && (
+                      <div className="px-4 py-5 chat-box chat-box-h bg-white">
+                        <h3 className="mt-10">Invite People</h3>
+                        <div className="input-group call-inv">
+                          <div className="input-group-prepend">
+                            <div
+                              className="input-group-text bg-transparent border-right-0 call-sear"
+                            >
+                              <i className="fa fa-search"/>
+                            </div>
+                          </div>
+                          <input
+                            className="form-control py-2 border-left-0 border call-invi"
+                            type="search"
+                            value="Invite someone"
+                            id="example-search-input"
+                          />
+
+                        </div>
+                        <div className="media w-50 mb-3 call-in-p">
+                          <img
+                            src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                            alt="user"
+                            width="50"
+                            className="rounded-circle"
+                          />
+                          <div className="media-body ml-3">
+                            <div className="rounded py-2 mb-2">
+
+                              <p className="small text-muted mr0">Julian Mendez</p>
+                              <div className="row">
+                                <div className="col-md-8">
+                                  <p className="text-small mb-0 text-muted">
+                                    Sr. UX
+                                    Designer, New York
+                                  </p>
+                                </div>
+                                <div className="col-md-4">
+                                  <input
+                                    type="checkbox"
+                                    name="vehicle3"
+                                    value="Boat"
+                                  />
+                                  <label htmlFor="vehicle3"> Invite</label>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div className="media w-50 mb-3 call-in-p">
+                          <img
+                            src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                            alt="user"
+                            width="50"
+                            className="rounded-circle"
+                          />
+                          <div className="media-body ml-3">
+                            <div className="rounded py-2 mb-2">
+
+                              <p className="small text-muted mr0">Julian Mendez</p>
+                              <div className="row">
+                                <div className="col-md-8">
+                                  <p className="text-small mb-0 text-muted">
+                                    Sr. UX
+                                    Designer, New York
+                                  </p>
+                                </div>
+                                <div className="col-md-4">
+                                  <input
+                                    type="checkbox"
+                                    name="vehicle3"
+                                    value="Boat"
+                                  />
+                                  <label htmlFor="vehicle3"> Invite</label>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div className="media w-50 mb-3 call-in-p">
+                          <img
+                            src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                            alt="user"
+                            width="50"
+                            className="rounded-circle"
+                          />
+                          <div className="media-body ml-3">
+                            <div className="rounded py-2 mb-2">
+
+                              <p className="small text-muted mr0">Julian Mendez</p>
+                              <div className="row">
+                                <div className="col-md-8">
+                                  <p className="text-small mb-0 text-muted">
+                                    Sr. UX
+                                    Designer, New York
+                                  </p>
+                                </div>
+                                <div className="col-md-4">
+                                  <input
+                                    type="checkbox"
+                                    name="vehicle3"
+                                    value="Boat"
+                                  />
+                                  <label htmlFor="vehicle3"> Invite</label>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div className="media w-50 mb-3 call-in-p">
+                          <img
+                            src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                            alt="user"
+                            width="50"
+                            className="rounded-circle"
+                          />
+                          <div className="media-body ml-3">
+                            <div className="rounded py-2 mb-2">
+
+                              <p className="small text-muted mr0">Julian Mendez</p>
+                              <div className="row">
+                                <div className="col-md-8">
+                                  <p className="text-small mb-0 text-muted">
+                                    Sr. UX
+                                    Designer, New York
+                                  </p>
+                                </div>
+                                <div className="col-md-4">
+                                  <input
+                                    type="checkbox"
+                                    name="vehicle3"
+                                    value="Boat"
+                                  />
+                                  <label htmlFor="vehicle3"> Invite</label>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div className="media w-50 mb-3 call-in-p">
+                          <img
+                            src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                            alt="user"
+                            width="50"
+                            className="rounded-circle"
+                          />
+                          <div className="media-body ml-3">
+                            <div className="rounded py-2 mb-2">
+
+                              <p className="small text-muted mr0">Julian Mendez</p>
+                              <div className="row">
+                                <div className="col-md-8">
+                                  <p className="text-small mb-0 text-muted">
+                                    Sr. UX
+                                    Designer, New York
+                                  </p>
+                                </div>
+                                <div className="col-md-4">
+                                  <input
+                                    type="checkbox"
+                                    name="vehicle3"
+                                    value="Boat"
+                                  />
+                                  <label htmlFor="vehicle3"> Invite</label>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div className="media w-50 mb-3 call-in-p">
+                          <img
+                            src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                            alt="user"
+                            width="50"
+                            className="rounded-circle"
+                          />
+                          <div className="media-body ml-3">
+                            <div className="rounded py-2 mb-2">
+
+                              <p className="small text-muted mr0">Julian Mendez</p>
+                              <div className="row">
+                                <div className="col-md-8">
+                                  <p className="text-small mb-0 text-muted">
+                                    Sr. UX
+                                    Designer, New York
+                                  </p>
+                                </div>
+                                <div className="col-md-4">
+                                  <input
+                                    type="checkbox"
+                                    name="vehicle3"
+                                    value="Boat"
+                                  />
+                                  <label htmlFor="vehicle3"> Invite</label>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div className="media w-50 mb-3 call-in-p">
+                          <img
+                            src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                            alt="user"
+                            width="50"
+                            className="rounded-circle"
+                          />
+                          <div className="media-body ml-3">
+                            <div className="rounded py-2 mb-2">
+
+                              <p className="small text-muted mr0">Julian Mendez</p>
+                              <div className="row">
+                                <div className="col-md-8">
+                                  <p className="text-small mb-0 text-muted">
+                                    Sr. UX
+                                    Designer, New York
+                                  </p>
+                                </div>
+                                <div className="col-md-4">
+                                  <input
+                                    type="checkbox"
+                                    name="vehicle3"
+                                    value="Boat"
+                                  />
+                                  <label htmlFor="vehicle3"> Invite</label>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div className="media w-50 mb-3 call-in-p">
+                          <img
+                            src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                            alt="user"
+                            width="50"
+                            className="rounded-circle"
+                          />
+                          <div className="media-body ml-3">
+                            <div className="rounded py-2 mb-2">
+
+                              <p className="small text-muted mr0">Julian Mendez</p>
+                              <div className="row">
+                                <div className="col-md-8">
+                                  <p className="text-small mb-0 text-muted">
+                                    Sr. UX
+                                    Designer, New York
+                                  </p>
+                                </div>
+                                <div className="col-md-4">
+                                  <input
+                                    type="checkbox"
+                                    name="vehicle3"
+                                    value="Boat"
+                                  />
+                                  <label htmlFor="vehicle3"> Invite</label>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div className="media w-50 mb-3 call-in-p">
+                          <img
+                            src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
+                            alt="user"
+                            width="50"
+                            className="rounded-circle"
+                          />
+                          <div className="media-body ml-3">
+                            <div className="rounded py-2 mb-2">
+
+                              <p className="small text-muted mr0">Julian Mendez</p>
+                              <div className="row">
+                                <div className="col-md-8">
+                                  <p className="text-small mb-0 text-muted">
+                                    Sr. UX
+                                    Designer, New York
+                                  </p>
+                                </div>
+                                <div className="col-md-4">
+                                  <input
+                                    type="checkbox"
+                                    name="vehicle3"
+                                    value="Boat"
+                                  />
+                                  <label htmlFor="vehicle3"> Invite</label>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
               )}
             </div>
           </div>
@@ -810,17 +827,17 @@ Sr. UX
             </div>
           </footer>
         </div>
-        <BreakoutRoomInvitation />
-        <PollingContainer />
-        <ModalContainer />
-        <AudioContainer />
-        <ToastContainer rtl />
-        <ChatAlertContainer />
-        <WaitingNotifierContainer />
-        <LockNotifier />
-        <PingPongContainer />
-        <ManyWebcamsNotifier />
-        {customStyleUrl ? <link rel="stylesheet" type="text/css" href={customStyleUrl} /> : null}
+        <BreakoutRoomInvitation/>
+        <PollingContainer/>
+        <ModalContainer/>
+        <AudioContainer/>
+        <ToastContainer rtl/>
+        <ChatAlertContainer/>
+        <WaitingNotifierContainer/>
+        <LockNotifier/>
+        <PingPongContainer/>
+        <ManyWebcamsNotifier/>
+        {customStyleUrl ? <link rel="stylesheet" type="text/css" href={customStyleUrl}/> : null}
         {customStyle ? (
           <link
             rel="stylesheet"
@@ -842,4 +859,8 @@ const mapStateToProps = state => ({
   isInviteBox: state.panel.isInviteBox,
 });
 
-export default connect(mapStateToProps, { setPanelOpened, setChatBox, setInviteBox })(injectIntl(App));
+export default connect(mapStateToProps, {
+  setPanelOpened,
+  setChatBox,
+  setInviteBox
+})(injectIntl(App));

@@ -8,7 +8,8 @@ import DropdownTrigger from '/imports/ui/components/dropdown/trigger/component';
 import DropdownContent from '/imports/ui/components/dropdown/content/component';
 import DropdownList from '/imports/ui/components/dropdown/list/component';
 import DropdownListItem from '/imports/ui/components/dropdown/list/item/component';
-import PresentationUploaderContainer from '/imports/ui/components/presentation/presentation-uploader/container';
+import PresentationUploaderContainer
+  from '/imports/ui/components/presentation/presentation-uploader/container';
 import { withModalMounter } from '/imports/ui/components/modal/service';
 import withShortcutHelper from '/imports/ui/components/shortcut-help/service';
 import { styles } from '../styles';
@@ -90,7 +91,10 @@ class ActionsDropdown extends PureComponent {
 
   componentWillUpdate(nextProps) {
     const { amIPresenter: isPresenter } = nextProps;
-    const { amIPresenter: wasPresenter, mountModal } = this.props;
+    const {
+      amIPresenter: wasPresenter,
+      mountModal
+    } = this.props;
     if (wasPresenter && !isPresenter) {
       mountModal(null);
     }
@@ -178,12 +182,12 @@ class ActionsDropdown extends PureComponent {
 
   handleExternalVideoClick() {
     const { mountModal } = this.props;
-    mountModal(<ExternalVideoModal />);
+    mountModal(<ExternalVideoModal/>);
   }
 
   handlePresentationClick() {
     const { mountModal } = this.props;
-    mountModal(<PresentationUploaderContainer />);
+    mountModal(<PresentationUploaderContainer/>);
   }
 
   render() {
@@ -204,10 +208,12 @@ class ActionsDropdown extends PureComponent {
     }
 
     return (
-      <Dropdown ref={(ref) => { this._dropdown = ref; }}>
+      <Dropdown ref={(ref) => {
+        this._dropdown = ref;
+      }}>
         <DropdownTrigger tabIndex={0} accessKey={OPEN_ACTIONS_AK}>
           <figure className="image is-44x44 action-more">
-            <img src="img/MoreIcon.png" className="is-rounded" />
+            <img src="img/MoreIcon.png" className="is-rounded"/>
           </figure>
         </DropdownTrigger>
         <DropdownContent placement="top left">
