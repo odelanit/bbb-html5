@@ -98,7 +98,11 @@ main {
     padding: 0;
 }
 
-.meeting-c .image:last-child {
+.meeting-c .dropdown {
+    margin-right: .5rem;
+}
+
+.meeting-c .image:last-child, .meeting-c .dropdown:last-child {
     margin-right: 0;
 }
 

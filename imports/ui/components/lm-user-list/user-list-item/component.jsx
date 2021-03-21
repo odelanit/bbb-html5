@@ -11,7 +11,6 @@ const propTypes = {
   getAvailableActions: PropTypes.func.isRequired,
   isThisMeetingLocked: PropTypes.bool.isRequired,
   normalizeEmojiName: PropTypes.func.isRequired,
-  getScrollContainerRef: PropTypes.func.isRequired,
   toggleUserLock: PropTypes.func.isRequired,
   isMeteorConnected: PropTypes.bool.isRequired,
 };
@@ -28,7 +27,6 @@ class UserListItem extends PureComponent {
       getEmoji,
       getEmojiList,
       getGroupChatPrivate,
-      getScrollContainerRef,
       intl,
       isThisMeetingLocked,
       lockSettingsProps,
@@ -47,7 +45,7 @@ class UserListItem extends PureComponent {
       voiceUser,
     } = this.props;
 
-    const contents = (
+    return (
       <UserDropdown
         {...{
           assignPresenter,
@@ -58,7 +56,6 @@ class UserListItem extends PureComponent {
           getEmoji,
           getEmojiList,
           getGroupChatPrivate,
-          getScrollContainerRef,
           intl,
           isThisMeetingLocked,
           lockSettingsProps,
@@ -79,8 +76,6 @@ class UserListItem extends PureComponent {
         }}
       />
     );
-
-    return contents;
   }
 }
 

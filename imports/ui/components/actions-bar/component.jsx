@@ -10,6 +10,7 @@ import JoinVideoOptionsContainer from '../video-provider/video-button/container'
 import CaptionsButtonContainer from '/imports/ui/components/actions-bar/captions/container';
 import PresentationOptionsContainer from './presentation-options/component';
 import {setChatBox, setInviteBox, setPanelOpened} from "/imports/redux/actions";
+import StatusDropdownContainer from './status-dropdown/container';
 
 class ActionsBar extends PureComponent {
     handleMessageClicked = () => {
@@ -70,9 +71,7 @@ class ActionsBar extends PureComponent {
                     screenshareDataSavingSetting,
                 }}
                 />
-                <figure className="image is-44x44">
-                    <img src="img/Hand.png" alt=""/>
-                </figure>
+                <StatusDropdownContainer />
                 <figure className="image is-44x44" onClick={this.handleMessageClicked}>
                     <img src="img/MessageIcon.png"/>
                 </figure>

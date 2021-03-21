@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import { defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
-import UserAvatar from '/imports/ui/components/user-avatar/component';
 import Icon from '/imports/ui/components/icon/component';
 import Dropdown from '/imports/ui/components/dropdown/component';
 import DropdownTrigger from '/imports/ui/components/dropdown/trigger/component';
@@ -18,6 +17,7 @@ import { Session } from 'meteor/session';
 import { styles } from './styles';
 import UserName from '../user-name/component';
 import UserIcons from '../user-icons/component';
+import UserAvatar from '../user-avatar/component';
 
 const messages = defineMessages({
   presenter: {
@@ -126,7 +126,6 @@ const propTypes = {
   }).isRequired,
   normalizeEmojiName: PropTypes.func.isRequired,
   isThisMeetingLocked: PropTypes.bool.isRequired,
-  getScrollContainerRef: PropTypes.func.isRequired,
   toggleUserLock: PropTypes.func.isRequired,
 };
 const CHAT_ENABLED = Meteor.settings.public.chat.enabled;
@@ -150,7 +149,7 @@ class UserDropdown extends PureComponent {
     this.state = {
       isActionsOpen: false,
       dropdownOffset: 0,
-      dropdownDirection: 'top',
+      dropdownDirection: 'right',
       dropdownVisible: false,
       showNestedOptions: false,
     };
@@ -170,43 +169,35 @@ class UserDropdown extends PureComponent {
   }
 
   componentDidUpdate() {
-    this.checkDropdownDirection();
+    // this.checkDropdownDirection();
   }
 
   onActionsShow() {
     Session.set('dropdownOpen', true);
-    const { getScrollContainerRef } = this.props;
     const dropdown = this.getDropdownMenuParent();
-    const scrollContainer = getScrollContainerRef();
 
-    if (dropdown && scrollContainer) {
+    if (dropdown) {
       const dropdownTrigger = dropdown.children[0];
       const list = findDOMNode(this.list);
       const children = [].slice.call(list.children);
-      children.find(child => child.getAttribute('role') === 'menuitem').focus();
+      children.find(child => child.getAttribute('role') === 'menuitem')
+        .focus();
 
       this.setState({
         isActionsOpen: true,
         dropdownVisible: false,
-        dropdownOffset: dropdownTrigger.offsetTop - scrollContainer.scrollTop,
-        dropdownDirection: 'top',
+        dropdownOffset: dropdownTrigger.offsetTop,
+        dropdownDirection: 'right',
       });
-
-      scrollContainer.addEventListener('scroll', this.handleScroll, false);
     }
   }
 
   onActionsHide(callback) {
-    const { getScrollContainerRef } = this.props;
-
     this.setState({
       isActionsOpen: false,
       dropdownVisible: false,
       showNestedOptions: false,
     });
-
-    const scrollContainer = getScrollContainerRef();
-    scrollContainer.removeEventListener('scroll', this.handleScroll, false);
 
     if (callback) {
       return callback;
@@ -284,33 +275,36 @@ class UserDropdown extends PureComponent {
         ));
       }
 
-      actions.push(<DropdownListSeparator key={_.uniqueId('list-separator-')} />);
+      actions.push(<DropdownListSeparator key={_.uniqueId('list-separator-')}/>);
 
       const statuses = Object.keys(getEmojiList);
       statuses.map(status => actions.push(this.makeDropdownItem(
         status,
         intl.formatMessage({ id: `app.actionsBar.emojiMenu.${status}Label` }),
-        () => { setEmojiStatus(user.userId, status); this.resetMenuState(); },
+        () => {
+          setEmojiStatus(user.userId, status);
+          this.resetMenuState();
+        },
         getEmojiList[status],
       )));
 
       return actions;
     }
 
-    if (allowedToChangeStatus && isMeteorConnected) {
-      actions.push(this.makeDropdownItem(
-        'setstatus',
-        intl.formatMessage(messages.statusTriggerLabel),
-        () => this.setState(
-          {
-            showNestedOptions: true,
-            isActionsOpen: true,
-          }, Session.set('dropdownOpen', true),
-        ),
-        'user',
-        'right_arrow',
-      ));
-    }
+    // if (allowedToChangeStatus && isMeteorConnected) {
+    //   actions.push(this.makeDropdownItem(
+    //     'setstatus',
+    //     intl.formatMessage(messages.statusTriggerLabel),
+    //     () => this.setState(
+    //       {
+    //         showNestedOptions: true,
+    //         isActionsOpen: true,
+    //       }, Session.set('dropdownOpen', true),
+    //     ),
+    //     'user',
+    //     'right_arrow',
+    //   ));
+    // }
 
     const showChatOption = CHAT_ENABLED
       && enablePrivateChat
@@ -440,7 +434,7 @@ class UserDropdown extends PureComponent {
           icon,
           iconRight,
         }}
-        className={key === getEmoji ? styles.emojiSelected : null}
+        className={key === getEmoji ? `${styles.emojiSelected} dropdown-item` : 'dropdown-item'}
         data-test={key}
       />
     );
@@ -450,7 +444,7 @@ class UserDropdown extends PureComponent {
     return this.setState({
       isActionsOpen: false,
       dropdownOffset: 0,
-      dropdownDirection: 'top',
+      dropdownDirection: 'right',
       dropdownVisible: false,
       showNestedOptions: false,
     });
@@ -468,13 +462,10 @@ class UserDropdown extends PureComponent {
    * Check if the dropdown is visible, if so, check if should be draw on top or bottom direction.
    */
   checkDropdownDirection() {
-    const { getScrollContainerRef } = this.props;
     if (this.isDropdownActivedByUser()) {
       const dropdown = this.getDropdownMenuParent();
       const dropdownTrigger = dropdown.children[0];
       const dropdownContent = dropdown.children[1];
-
-      const scrollContainer = getScrollContainerRef();
 
       const nextState = {
         dropdownVisible: true,
@@ -486,11 +477,14 @@ class UserDropdown extends PureComponent {
       );
 
       if (!isDropdownVisible) {
-        const { offsetTop, offsetHeight } = dropdownTrigger;
-        const offsetPageTop = (offsetTop + offsetHeight) - scrollContainer.scrollTop;
+        const {
+          offsetTop,
+          offsetHeight
+        } = dropdownTrigger;
+        const offsetPageTop = (offsetTop + offsetHeight);
 
         nextState.dropdownOffset = window.innerHeight - offsetPageTop;
-        nextState.dropdownDirection = 'bottom';
+        nextState.dropdownDirection = 'right';
       }
 
       this.setState(nextState);
@@ -498,12 +492,15 @@ class UserDropdown extends PureComponent {
   }
 
   /**
-  * Check if the dropdown is visible and is opened by the user
-  *
-  * @return True if is visible and opened by the user
-  */
+   * Check if the dropdown is visible and is opened by the user
+   *
+   * @return True if is visible and opened by the user
+   */
   isDropdownActivedByUser() {
-    const { isActionsOpen, dropdownVisible } = this.state;
+    const {
+      isActionsOpen,
+      dropdownVisible
+    } = this.state;
 
     return isActionsOpen && !dropdownVisible;
   }
@@ -522,10 +519,11 @@ class UserDropdown extends PureComponent {
     const isVoiceOnly = clientType === 'dial-in-user';
 
     const iconUser = user.emoji !== 'none'
-      ? (<Icon iconName={normalizeEmojiName(user.emoji)} />)
-      : user.name.toLowerCase().slice(0, 2);
+      ? (<Icon iconName={normalizeEmojiName(user.emoji)}/>)
+      : user.name.toLowerCase()
+        .slice(0, 2);
 
-    const iconVoiceOnlyUser = (<Icon iconName="audio_on" />);
+    const iconVoiceOnlyUser = (<Icon iconName="audio_on"/>);
     const userIcon = isVoiceOnly ? iconVoiceOnlyUser : iconUser;
 
     return (
@@ -540,121 +538,46 @@ class UserDropdown extends PureComponent {
         color={user.color}
       >
         {
-        userInBreakout
-        && !meetingIsBreakout
-          ? breakoutSequence : userIcon}
+          userInBreakout
+          && !meetingIsBreakout
+            ? breakoutSequence : userIcon}
       </UserAvatar>
     );
   }
 
   render() {
     const {
-      compact,
-      currentUser,
-      user,
-      intl,
-      isThisMeetingLocked,
-      isMe,
-    } = this.props;
-
-    const {
-      isActionsOpen,
       dropdownVisible,
-      dropdownDirection,
-      dropdownOffset,
-      showNestedOptions,
     } = this.state;
 
     const actions = this.getUsersActions();
 
-    const userItemContentsStyle = {};
-
-    userItemContentsStyle[styles.dropdown] = true;
-    userItemContentsStyle[styles.userListItem] = !isActionsOpen;
-    userItemContentsStyle[styles.usertListItemWithMenu] = isActionsOpen;
-
-    const you = isMe(user.userId) ? intl.formatMessage(messages.you) : '';
-
-    const presenter = (user.presenter)
-      ? intl.formatMessage(messages.presenter)
-      : '';
-
-    const userAriaLabel = intl.formatMessage(
-      messages.userAriaLabel,
-      {
-        0: user.name,
-        1: presenter,
-        2: you,
-        3: user.emoji,
-      },
-    );
-
     const contents = (
-      <div
-        data-test={isMe(user.userId) ? 'userListItemCurrent' : null}
-        className={!actions.length ? styles.userListItem : null}
-      >
-        <div className={styles.userItemContents}>
-          <div className={styles.userAvatar}>
-            {this.renderUserAvatar()}
-          </div>
-          {<UserName
-            {...{
-              user,
-              compact,
-              intl,
-              isThisMeetingLocked,
-              userAriaLabel,
-              isActionsOpen,
-              isMe,
-            }}
-          />}
-          {<UserIcons
-            {...{
-              user,
-              amIModerator: currentUser.role === ROLE_MODERATOR,
-            }}
-          />}
-        </div>
-      </div>
+      <figure className="image is-44x44 avatar">
+        {/*<img src="img/profile-pic.jpg" className="is-rounded"/>*/}
+        {this.renderUserAvatar()}
+      </figure>
     );
 
     if (!actions.length) return contents;
 
     return (
-      <Dropdown
-        ref={(ref) => { this.dropdown = ref; }}
-        keepOpen={isActionsOpen || showNestedOptions}
-        onShow={this.onActionsShow}
-        onHide={this.onActionsHide}
-        className={userItemContentsStyle}
-        autoFocus={false}
-        aria-haspopup="true"
-        aria-live="assertive"
-        aria-relevant="additions"
-      >
-        <DropdownTrigger>
-          {contents}
-        </DropdownTrigger>
-        <DropdownContent
-          style={{
-            visibility: dropdownVisible ? 'visible' : 'hidden',
-            [dropdownDirection]: `${dropdownOffset}px`,
-          }}
-          className={styles.dropdownContent}
-          placement={`right ${dropdownDirection}`}
-        >
-          <DropdownList
-            ref={(ref) => { this.list = ref; }}
-            getDropdownMenuParent={this.getDropdownMenuParent}
-            onActionsHide={this.onActionsHide}
-          >
+      <div className="dropdown is-up is-right">
+        <div className="dropdown-trigger">
+          <figure className="image is-44x44 avatar">
+            {/*<img src="img/profile-pic.jpg" className="is-rounded"/>*/}
+            {this.renderUserAvatar()}
+          </figure>
+        </div>
+        <div className="dropdown-menu">
+          <ul className="dropdown-content">
             {actions}
-          </DropdownList>
-        </DropdownContent>
-      </Dropdown>
+          </ul>
+        </div>
+      </div>
     );
   }
+
 }
 
 UserDropdown.propTypes = propTypes;
