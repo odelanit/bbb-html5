@@ -60,6 +60,7 @@
     "re-resizable": "^4.11.0",
     "react": "^16.14.0",
     "react-autosize-textarea": "^5.0.1",
+    "react-bulma-dropdown": "^0.1.7",
     "react-color": "^2.19.3",
     "react-dom": "^16.14.0",
     "react-draggable": "^3.3.0",

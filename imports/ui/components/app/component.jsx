@@ -24,7 +24,8 @@ import MediaService from '/imports/ui/components/media/service';
 import ManyWebcamsNotifier from '/imports/ui/components/video-provider/many-users-notify/container';
 import { styles } from './styles';
 import { setChatBox, setInviteBox, setPanelOpened } from '/imports/redux/actions';
-import UserListContainer from '../lm-user-list/container';
+import UserListContainer from '/imports/ui/components/lm-user-list/container';
+import ChatContainer from '/imports/ui/components/lm-chat/container';
 
 const MOBILE_MEDIA = 'only screen and (max-width: 40em)';
 const APP_CONFIG = Meteor.settings.public.app;
@@ -387,128 +388,7 @@ class App extends Component {
                 <div className="column">
                   <div className="meeting-sidebar">
                     {this.props.isChatBox && (
-                      <>
-                        <div className="px-4 py-5 ">
-                          <h3 className="mt-10">Meeting Chat</h3>
-                          <div className="media w-50 mb-3">
-                            <img
-                              src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-                              alt="user"
-                              width="50"
-                              className="rounded-circle"
-                            />
-                            <div className="media-body ml-3">
-                              <div className="bg-light rounded py-2 px-3 mb-2">
-                                <p className="text-small mb-0 text-muted">
-                                  Test which is
-                                  a new approach
-                                  all
-                                  solutions
-                                </p>
-                              </div>
-                              <p className="small text-muted">12:00 PM | Aug 13</p>
-                            </div>
-                          </div>
-
-                          <div className="media w-50 ml-auto mb-3">
-                            <div className="media-body">
-                              <div className="bg-primary rounded py-2 px-3 mb-2">
-                                <p className="text-small mb-0 text-white">
-                                  Test which is
-                                  a new approach
-                                  to have all
-                                  solutions
-                                </p>
-                              </div>
-                              <p className="small text-muted">12:00 PM | Aug 13</p>
-                            </div>
-                          </div>
-
-                          <div className="media w-50 mb-3">
-                            <img
-                              src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-                              alt="user"
-                              width="50"
-                              className="rounded-circle"
-                            />
-                            <div className="media-body ml-3">
-                              <div className="bg-light rounded py-2 px-3 mb-2">
-                                <p className="text-small mb-0 text-muted">
-                                  Test, which is
-                                  a new approach
-                                  to have
-                                </p>
-                              </div>
-                              <p className="small text-muted">12:00 PM | Aug 13</p>
-                            </div>
-                          </div>
-
-                          <div className="media w-50 ml-auto mb-3">
-                            <div className="media-body">
-                              <div className="bg-primary rounded py-2 px-3 mb-2">
-                                <p className="text-small mb-0 text-white">
-                                  Apollo
-                                  University, Delhi,
-                                  India Test
-                                </p>
-                              </div>
-                              <p className="small text-muted">12:00 PM | Aug 13</p>
-                            </div>
-                          </div>
-
-                          <div className="media w-50 mb-3">
-                            <img
-                              src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"
-                              alt="user"
-                              width="50"
-                              className="rounded-circle"
-                            />
-                            <div className="media-body ml-3">
-                              <div className="bg-light rounded py-2 px-3 mb-2">
-                                <p className="text-small mb-0 text-muted">
-                                  Test, which is
-                                  a new
-                                  approach
-                                </p>
-                              </div>
-                              <p className="small text-muted">12:00 PM | Aug 13</p>
-                            </div>
-                          </div>
-
-                          <div className="media w-50 ml-auto mb-3">
-                            <div className="media-body">
-                              <div className="bg-primary rounded py-2 px-3 mb-2">
-                                <p className="text-small mb-0 text-white">
-                                  Apollo
-                                  University, Delhi,
-                                  India Test
-                                </p>
-                              </div>
-                              <p className="small text-muted">12:00 PM | Aug 13</p>
-                            </div>
-                          </div>
-
-                        </div>
-                        <form action="#" className="bg-light">
-                          <div className="input-group">
-                            <input
-                              type="text"
-                              placeholder="Type a message"
-                              aria-describedby="button-addon2"
-                              className="form-control rounded-0 border-0 py-4 bg-light"
-                            />
-                            <div className="input-group-append">
-                              <button
-                                id="button-addon2"
-                                type="submit"
-                                className="btn btn-link"
-                              >
-                                <i className="fa fa-paper-plane"/>
-                              </button>
-                            </div>
-                          </div>
-                        </form>
-                      </>
+                      <ChatContainer/>
                     )}
                     {this.props.isInviteBox && (
                       <div className="px-4 py-5 chat-box chat-box-h bg-white">

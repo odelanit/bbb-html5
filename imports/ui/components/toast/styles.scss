@@ -128,16 +128,16 @@
   min-width: var(--toast-container-min-width);
   max-width: var(--toast-container-max-width);
   box-sizing: border-box;
-  right: var(--jumbo-padding-y);
-  left: auto;
+  //right: var(--jumbo-padding-y);
+  //left: auto;
   top: var(--toast-offset);
   max-height: 75vh;
   overflow: hidden;
 
-  [dir="rtl"] & {
+  //[dir="rtl"] & {
     right: auto;
     left: var(--jumbo-padding-y);
-  }
+  //}
 
   @include mq($small-only) {
     width: var(--toast-mobile-width);
@@ -184,7 +184,7 @@
   position: relative;
   font-size: 70%;
   left: var(--toast-offset-sm);
-  
+
   [dir="rtl"] & {
     left: auto;
     right: var(--toast-offset-sm);
@@ -229,8 +229,8 @@
 .progress {
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: auto;
+  //left: 0;
+  //right: auto;
   width: 0;
   height: 5px;
   z-index: 9999;
@@ -238,9 +238,9 @@
   background-color: var(--color-gray-lighter);
   border-radius: var(--border-radius);
 
-  
-  [dir="rtl"] & {
+
+  //[dir="rtl"] & {
     left: auto;
     right: 0;
-  }
+  //}
 }
