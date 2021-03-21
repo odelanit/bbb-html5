@@ -53,22 +53,6 @@ const Chat = (props) => {
       className={styles.chat}
     >
       <header className={styles.header}>
-        <div
-          data-test="chatTitle"
-          className={styles.title}
-        >
-          <Button
-            onClick={() => {
-              Session.set('idChatOpen', '');
-              Session.set('openPanel', 'userlist');
-            }}
-            aria-label={intl.formatMessage(intlMessages.hideChatLabel, { 0: title })}
-            accessKey={HIDE_CHAT_AK}
-            label={title}
-            icon="left_arrow"
-            className={styles.hideBtn}
-          />
-        </div>
         {
           chatID !== 'public'
             ? (

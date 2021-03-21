@@ -70,23 +70,9 @@ export default injectIntl(withTracker(({ intl }) => {
   const amIModerator = currentUser.role === ROLE_MODERATOR;
 
   if (chatID === PUBLIC_CHAT_KEY) {
-    const { welcomeProp } = ChatService.getWelcomeProp();
-
     messages = ChatService.getPublicGroupMessages();
 
     const time = currentUser.loginTime;
-    const welcomeId = `welcome-msg-${time}`;
-
-    const welcomeMsg = {
-      id: welcomeId,
-      content: [{
-        id: welcomeId,
-        text: welcomeProp.welcomeMsg,
-        time,
-      }],
-      time,
-      sender: null,
-    };
 
     const moderatorTime = time + 1;
     const moderatorId = `moderator-msg-${moderatorTime}`;
@@ -111,7 +97,6 @@ export default injectIntl(withTracker(({ intl }) => {
     );
 
     const messagesFormated = messagesBeforeWelcomeMsg
-      .concat(welcomeMsg)
       .concat((amIModerator && modOnlyMessage) ? moderatorMsg : [])
       .concat(messagesAfterWelcomeMsg);
 
