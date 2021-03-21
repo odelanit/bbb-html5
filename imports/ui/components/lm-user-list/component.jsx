@@ -3,6 +3,8 @@ import { injectIntl } from 'react-intl';
 import UserListItemContainer from './user-list-item/container';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
+import { connect } from 'react-redux';
+import { setChatBox, setInviteBox, setPanelOpened } from '/imports/redux/actions';
 
 const ROLE_MODERATOR = Meteor.settings.public.user.role_moderator;
 
@@ -24,7 +26,9 @@ const defaultProps = {
 
 class UserList extends Component {
   handleInviteClicked = () => {
-
+    this.props.setPanelOpened(true)
+    this.props.setChatBox(false)
+    this.props.setInviteBox(true)
   };
 
   render() {
@@ -44,11 +48,6 @@ class UserList extends Component {
           </figure>
         )}
         {
-          // users.map((user, index) => (
-          //   <figure className="image is-44x44 avatar" key={index}>
-          //     <img src="img/profile-pic.jpg" className="is-rounded"/>
-          //   </figure>
-          // ))
           users.map((u, index) => (
             <UserListItemContainer
               {...{
@@ -71,4 +70,14 @@ class UserList extends Component {
 UserList.propTypes = propTypes;
 UserList.defaultProps = defaultProps;
 
-export default injectIntl(UserList);
+const mapStateToProps = state => ({
+  isPanelOpened: state.panel.isPanelOpened,
+  isChatBox: state.panel.isChatBox,
+  isInviteBox: state.panel.isInviteBox,
+});
+
+export default connect(mapStateToProps, {
+  setPanelOpened,
+  setChatBox,
+  setInviteBox
+})(injectIntl(UserList));

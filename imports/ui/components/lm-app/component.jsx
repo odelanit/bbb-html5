@@ -4,6 +4,7 @@ import { throttle } from 'lodash';
 import { defineMessages, injectIntl, intlShape } from 'react-intl';
 import Modal from 'react-modal';
 import browser from 'browser-detect';
+import { connect } from 'react-redux';
 import PanelManager from '/imports/ui/components/panel-manager/component';
 import PollingContainer from '/imports/ui/components/polling/container';
 import logger from '/imports/startup/client/logger';
@@ -22,6 +23,10 @@ import PingPongContainer from '/imports/ui/components/ping-pong/container';
 import MediaService from '/imports/ui/components/media/service';
 import ManyWebcamsNotifier from '/imports/ui/components/video-provider/many-users-notify/container';
 import { styles } from './styles';
+import { setChatBox, setInviteBox, setPanelOpened } from '/imports/redux/actions';
+import UserListContainer from '/imports/ui/components/lm-user-list/container';
+import ChatContainer from '/imports/ui/components/lm-chat/container';
+import InviteContainer from '../lm-invite/container';
 
 const MOBILE_MEDIA = 'only screen and (max-width: 40em)';
 const APP_CONFIG = Meteor.settings.public.app;
@@ -101,13 +106,19 @@ class App extends Component {
       enableResize: !window.matchMedia(MOBILE_MEDIA).matches,
     };
 
-    this.handleWindowResize = throttle(this.handleWindowResize).bind(this);
+    this.handleWindowResize = throttle(this.handleWindowResize)
+      .bind(this);
     this.shouldAriaHide = this.shouldAriaHide.bind(this);
   }
 
   componentDidMount() {
     const {
-      locale, notify, intl, validIOSVersion, startBandwidthMonitoring, handleNetworkConnection,
+      locale,
+      notify,
+      intl,
+      validIOSVersion,
+      startBandwidthMonitoring,
+      handleNetworkConnection,
     } = this.props;
     const BROWSER_RESULTS = browser();
     const isMobileBrowser = BROWSER_RESULTS.mobile || BROWSER_RESULTS.os.includes('Android');
@@ -115,14 +126,16 @@ class App extends Component {
     MediaService.setSwapLayout();
     Modal.setAppElement('#app');
     document.getElementsByTagName('html')[0].lang = locale;
-    document.getElementsByTagName('html')[0].style.fontSize = isMobileBrowser ? MOBILE_FONT_SIZE : DESKTOP_FONT_SIZE;
+    // document.getElementsByTagName('html')[0].style.fontSize = isMobileBrowser ? MOBILE_FONT_SIZE : DESKTOP_FONT_SIZE;
 
     const body = document.getElementsByTagName('body')[0];
     if (BROWSER_RESULTS && BROWSER_RESULTS.name) {
       body.classList.add(`browser-${BROWSER_RESULTS.name}`);
     }
     if (BROWSER_RESULTS && BROWSER_RESULTS.os) {
-      body.classList.add(`os-${BROWSER_RESULTS.os.split(' ').shift().toLowerCase()}`);
+      body.classList.add(`os-${BROWSER_RESULTS.os.split(' ')
+        .shift()
+        .toLowerCase()}`);
     }
 
     if (!validIOSVersion()) {
@@ -133,8 +146,12 @@ class App extends Component {
 
     this.handleWindowResize();
     window.addEventListener('resize', this.handleWindowResize, false);
-    window.ondragover = function (e) { e.preventDefault(); };
-    window.ondrop = function (e) { e.preventDefault(); };
+    window.ondragover = function (e) {
+      e.preventDefault();
+    };
+    window.ondrop = function (e) {
+      e.preventDefault();
+    };
 
     if (ENABLE_NETWORK_MONITORING) {
       if (navigator.connection) {
@@ -150,12 +167,16 @@ class App extends Component {
 
   componentDidUpdate(prevProps) {
     const {
-      meetingMuted, notify, currentUserEmoji, intl, hasPublishedPoll,
+      meetingMuted,
+      notify,
+      currentUserEmoji,
+      intl,
+      hasPublishedPoll,
     } = this.props;
 
     if (prevProps.currentUserEmoji.status !== currentUserEmoji.status) {
       const formattedEmojiStatus = intl.formatMessage({ id: `app.actionsBar.emojiMenu.${currentUserEmoji.status}Label` })
-      || currentUserEmoji.status;
+        || currentUserEmoji.status;
 
       notify(
         currentUserEmoji.status === 'none'
@@ -201,13 +222,19 @@ class App extends Component {
   }
 
   shouldAriaHide() {
-    const { openPanel, isPhone } = this.props;
+    const {
+      openPanel,
+      isPhone
+    } = this.props;
     return openPanel !== '' && (isPhone || isLayeredView.matches);
   }
 
   renderPanel() {
     const { enableResize } = this.state;
-    const { openPanel, isRTL } = this.props;
+    const {
+      openPanel,
+      isRTL
+    } = this.props;
 
     return (
       <PanelManager
@@ -227,9 +254,9 @@ class App extends Component {
     if (!navbar) return null;
 
     return (
-      <header className={styles.navbar}>
+      <>
         {navbar}
-      </header>
+      </>
     );
   }
 
@@ -267,7 +294,7 @@ class App extends Component {
 
     return (
       <section
-        className={styles.media}
+        style={{ height: '100%' }}
         aria-label={intl.formatMessage(intlMessages.mediaLabel)}
         aria-hidden={this.shouldAriaHide()}
       >
@@ -286,20 +313,19 @@ class App extends Component {
     if (!actionsbar) return null;
 
     return (
-      <section
-        className={styles.actionsbar}
-        aria-label={intl.formatMessage(intlMessages.actionsBarLabel)}
-        aria-hidden={this.shouldAriaHide()}
-      >
+      <>
         {actionsbar}
-      </section>
+      </>
     );
   }
 
   renderActivityCheck() {
     const { User } = this.props;
 
-    const { inactivityCheck, responseDelay } = User;
+    const {
+      inactivityCheck,
+      responseDelay
+    } = User;
 
     return (inactivityCheck ? (
       <ActivityCheckContainer
@@ -309,7 +335,10 @@ class App extends Component {
   }
 
   renderUserInformation() {
-    const { UserInfo, User } = this.props;
+    const {
+      UserInfo,
+      User
+    } = this.props;
 
     return (UserInfo.length > 0 ? (
       <UserInfoContainer
@@ -321,35 +350,79 @@ class App extends Component {
 
   render() {
     const {
-      customStyle, customStyleUrl, openPanel,
+      customStyle,
+      customStyleUrl,
+      openPanel,
+      users,
     } = this.props;
     return (
-      <main className={styles.main}>
+      <main>
         {this.renderActivityCheck()}
         {this.renderUserInformation()}
-        <BannerBarContainer />
-        <NotificationsBarContainer />
-        <section className={styles.wrapper}>
-          <div className={openPanel ? styles.content : styles.noPanelContent}>
-            {this.renderNavBar()}
-            {this.renderMedia()}
-            {this.renderActionsBar()}
+        <BannerBarContainer/>
+        <NotificationsBarContainer/>
+        <div id="wrapper" className="wrapper">
+          {this.renderNavBar()}
+          <div className="container is-fluid main">
+            <div className="columns" style={{ height: '100%' }}>
+              <div
+                className={this.props.isPanelOpened ? 'column is-three-quarters meeting-main' : 'column meeting-main'}
+              >
+                <div className="meeting-media" style={{ height: 'calc(100% - 122px)' }}>
+                  {this.renderMedia()}
+                </div>
+                <div className="call-m py-5 px-3">
+                  <div className="columns">
+                    <div className="column">
+                      <div className="meeting-actions">
+                        <div className="px-4">9:28</div>
+                        {this.renderActionsBar()}
+                      </div>
+                    </div>
+                    <div className="column">
+                      <UserListContainer/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {this.props.isPanelOpened && (
+                <div className="column">
+                  <div className="meeting-sidebar">
+                    {this.props.isChatBox && (
+                      <ChatContainer/>
+                    )}
+                    {this.props.isInviteBox && (
+                      <InviteContainer/>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-          {this.renderPanel()}
-          {this.renderSidebar()}
-        </section>
-        <BreakoutRoomInvitation />
-        <PollingContainer />
-        <ModalContainer />
-        <AudioContainer />
-        <ToastContainer rtl />
-        <ChatAlertContainer />
-        <WaitingNotifierContainer />
-        <LockNotifier />
-        <PingPongContainer />
-        <ManyWebcamsNotifier />
-        {customStyleUrl ? <link rel="stylesheet" type="text/css" href={customStyleUrl} /> : null}
-        {customStyle ? <link rel="stylesheet" type="text/css" href={`data:text/css;charset=UTF-8,${encodeURIComponent(customStyle)}`} /> : null}
+          <footer className="footer is-fixed-bottom">
+            <div className="content has-text-centered">
+              <span>Copyright &copy; LetsMeet 2020</span>
+            </div>
+          </footer>
+        </div>
+        <BreakoutRoomInvitation/>
+        <PollingContainer/>
+        <ModalContainer/>
+        <AudioContainer/>
+        <ToastContainer rtl/>
+        <ChatAlertContainer/>
+        <WaitingNotifierContainer/>
+        <LockNotifier/>
+        <PingPongContainer/>
+        <ManyWebcamsNotifier/>
+        {customStyleUrl ? <link rel="stylesheet" type="text/css" href={customStyleUrl}/> : null}
+        {customStyle ? (
+          <link
+            rel="stylesheet"
+            type="text/css"
+            href={`data:text/css;charset=UTF-8,${encodeURIComponent(customStyle)}`}
+          />
+        ) : null}
       </main>
     );
   }
@@ -358,4 +431,14 @@ class App extends Component {
 App.propTypes = propTypes;
 App.defaultProps = defaultProps;
 
-export default injectIntl(App);
+const mapStateToProps = state => ({
+  isPanelOpened: state.panel.isPanelOpened,
+  isChatBox: state.panel.isChatBox,
+  isInviteBox: state.panel.isInviteBox,
+});
+
+export default connect(mapStateToProps, {
+  setPanelOpened,
+  setChatBox,
+  setInviteBox
+})(injectIntl(App));

@@ -24,8 +24,9 @@ import { withModalMounter } from '../modal/service';
 
 import App from './component';
 import NavBarContainer from '../nav-bar/container';
-import ActionsBarContainer from '../actions-bar/container';
+import ActionsBarContainer from '/imports/ui/components/lm-actions-bar/container';
 import MediaContainer from '../media/container';
+import UserListService from "../user-list/service";
 
 const propTypes = {
   navbar: PropTypes.node,
@@ -131,6 +132,7 @@ export default injectIntl(withModalMounter(withTracker(({ intl, baseControls }) 
     hasPublishedPoll: publishedPoll,
     startBandwidthMonitoring,
     handleNetworkConnection: () => updateNavigatorConnection(navigator.connection),
+    users: UserListService.getUsers(),
   };
 })(AppContainer)));
 
