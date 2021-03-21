@@ -55,7 +55,7 @@ const Chat = (props) => {
       className={styles.chat}
     >
       <header className={styles.header}>
-        <h3 style={{fontSize: '20px'}}>
+        <h3 style={{fontSize: '24px'}}>
           Meeting Chat
         </h3>
         {
