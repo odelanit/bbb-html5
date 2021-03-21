@@ -316,7 +316,7 @@ class UserDropdown extends PureComponent {
           getGroupChatPrivate(currentUser.userId, user);
           Session.set('openPanel', 'chat');
           Session.set('idChatOpen', user.userId);
-          this.props.setPanelOpened(!isPanelOpened)
+          this.props.setPanelOpened(true)
           this.props.setChatBox(true)
         },
         'chat',
