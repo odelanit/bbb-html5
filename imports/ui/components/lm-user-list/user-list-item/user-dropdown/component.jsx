@@ -3,10 +3,6 @@ import { defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import Icon from '/imports/ui/components/icon/component';
-import Dropdown from '/imports/ui/components/dropdown/component';
-import DropdownTrigger from '/imports/ui/components/dropdown/trigger/component';
-import DropdownContent from '/imports/ui/components/dropdown/content/component';
-import DropdownList from '/imports/ui/components/dropdown/list/component';
 import DropdownListItem from '/imports/ui/components/dropdown/list/item/component';
 import DropdownListSeparator from '/imports/ui/components/dropdown/list/separator/component';
 import lockContextContainer from '/imports/ui/components/lock-viewers/context/container';
@@ -15,9 +11,9 @@ import RemoveUserModal from '/imports/ui/components/modal/remove-user/component'
 import _ from 'lodash';
 import { Session } from 'meteor/session';
 import { styles } from './styles';
-import UserName from '../user-name/component';
-import UserIcons from '../user-icons/component';
 import UserAvatar from '../user-avatar/component';
+import { connect } from 'react-redux';
+import { setChatBox, setInviteBox, setPanelOpened } from '/imports/redux/actions';
 
 const messages = defineMessages({
   presenter: {
@@ -320,6 +316,8 @@ class UserDropdown extends PureComponent {
           getGroupChatPrivate(currentUser.userId, user);
           Session.set('openPanel', 'chat');
           Session.set('idChatOpen', user.userId);
+          this.props.setPanelOpened(!isPanelOpened)
+          this.props.setChatBox(true)
         },
         'chat',
       ));
@@ -581,4 +579,17 @@ class UserDropdown extends PureComponent {
 }
 
 UserDropdown.propTypes = propTypes;
-export default withModalMounter(lockContextContainer(UserDropdown));
+
+const mapStateToProps = state => {
+  return {
+    isPanelOpened: state.panel.isPanelOpened,
+    isChatBox: state.panel.isChatBox,
+    isInviteBox: state.panel.isInviteBox
+  };
+};
+
+export default connect(mapStateToProps, {
+  setPanelOpened,
+  setChatBox,
+  setInviteBox
+})(withModalMounter(lockContextContainer(UserDropdown)));
