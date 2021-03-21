@@ -69,8 +69,8 @@ const Chat = (props) => {
                 hideLabel
                 onClick={() => {
                   actions.handleClosePrivateChat(chatID);
-                  this.props.setPanelOpened(false)
-                  this.props.setChatBox(false)
+                  props.setPanelOpened(false)
+                  props.setChatBox(false)
                 }}
                 aria-label={intl.formatMessage(intlMessages.closeChatLabel, { 0: title })}
                 label={intl.formatMessage(intlMessages.closeChatLabel, { 0: title })}
