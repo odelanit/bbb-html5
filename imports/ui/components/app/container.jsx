@@ -24,7 +24,7 @@ import { withModalMounter } from '../modal/service';
 
 import App from './component';
 import NavBarContainer from '../nav-bar/container';
-import ActionsBarContainer from '../actions-bar/container';
+import ActionsBarContainer from '/imports/ui/components/lm-actions-bar/container';
 import MediaContainer from '../media/container';
 import UserListService from "../user-list/service";
 
