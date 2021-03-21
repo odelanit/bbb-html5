@@ -9,7 +9,7 @@ const propTypes = {
   lastReadMessageTime: PropTypes.number,
   handleReadMessage: PropTypes.func.isRequired,
   scrollArea: PropTypes.instanceOf(Element),
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 const defaultProps = {
