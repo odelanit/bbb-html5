@@ -10,7 +10,7 @@ import MessageForm from './message-form/container';
 import MessageList from './message-list/container';
 import ChatDropdown from './chat-dropdown/component';
 import { connect } from 'react-redux';
-import { setChatBox, setInviteBox, setPanelOpened } from '../../../redux/actions';
+import { setChatBox, setInviteBox, setPanelOpened } from '/imports/redux/actions';
 
 const ELEMENT_ID = 'chat-messages';
 
@@ -121,11 +121,11 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {
+export default withShortcutHelper(injectWbResizeEvent(injectIntl(memo(connect(mapStateToProps, {
   setPanelOpened,
   setChatBox,
   setInviteBox
-})(withShortcutHelper(injectWbResizeEvent(injectIntl(memo(Chat))), ['hidePrivateChat', 'closePrivateChat']));
+})(Chat)))), ['hidePrivateChat', 'closePrivateChat']);
 
 const propTypes = {
   chatID: PropTypes.string.isRequired,
