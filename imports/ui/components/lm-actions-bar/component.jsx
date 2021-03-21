@@ -1,20 +1,22 @@
 import React, {PureComponent} from 'react';
-import cx from 'classnames';
 import {connect} from 'react-redux';
+import { Session } from 'meteor/session';
 import {styles} from './styles.scss';
 import DesktopShare from './desktop-share/component';
 import ActionsDropdown from './actions-dropdown/component';
-import QuickPollDropdown from './quick-poll-dropdown/component';
 import AudioControlsContainer from '../audio/audio-controls/container';
 import JoinVideoOptionsContainer from '../video-provider/video-button/container';
-import CaptionsButtonContainer from '/imports/ui/components/actions-bar/captions/container';
-import PresentationOptionsContainer from './presentation-options/component';
 import {setChatBox, setInviteBox, setPanelOpened} from "/imports/redux/actions";
 import StatusDropdownContainer from './status-dropdown/container';
+
+const CHAT_CONFIG = Meteor.settings.public.chat;
+const PUBLIC_CHAT_ID = CHAT_CONFIG.public_id;
 
 class ActionsBar extends PureComponent {
     handleMessageClicked = () => {
         const isPanelOpened = this.props.isPanelOpened;
+        Session.set('openPanel', 'chat');
+        Session.set('idChatOpen', PUBLIC_CHAT_ID);
         this.props.setPanelOpened(!isPanelOpened)
         this.props.setChatBox(true)
         this.props.setInviteBox(false)
@@ -30,19 +32,14 @@ class ActionsBar extends PureComponent {
             screenSharingCheck,
             enableVideo,
             isLayoutSwapped,
-            toggleSwapLayout,
             handleTakePresenter,
             intl,
-            currentSlidHasContent,
-            parseCurrentSlideContent,
             isSharingVideo,
             screenShareEndAlert,
             stopExternalVideoShare,
             screenshareDataSavingSetting,
-            isCaptionsAvailable,
             isMeteorConnected,
             isPollingEnabled,
-            isThereCurrentPresentation,
             allowExternalVideo,
         } = this.props;
 
@@ -92,73 +89,6 @@ class ActionsBar extends PureComponent {
                 </figure>
             </>
         )
-
-        // return (
-        //     <div className={styles.actionsbar}>
-        //         <div className={styles.left}>
-        //             <ActionsDropdown {...{
-        //                 amIPresenter,
-        //                 amIModerator,
-        //                 isPollingEnabled,
-        //                 allowExternalVideo,
-        //                 handleTakePresenter,
-        //                 intl,
-        //                 isSharingVideo,
-        //                 stopExternalVideoShare,
-        //                 isMeteorConnected,
-        //             }}
-        //             />
-        //             {isPollingEnabled
-        //                 ? (
-        //                     <QuickPollDropdown
-        //                         {...{
-        //                             currentSlidHasContent,
-        //                             intl,
-        //                             amIPresenter,
-        //                             parseCurrentSlideContent,
-        //                         }}
-        //                     />
-        //                 ) : null
-        //             }
-        //             {isCaptionsAvailable
-        //                 ? (
-        //                     <CaptionsButtonContainer {...{intl}} />
-        //                 )
-        //                 : null
-        //             }
-        //         </div>
-        //         <div className={cx(actionBarClasses)}>
-        //             <AudioControlsContainer/>
-        //             {enableVideo
-        //                 ? (
-        //                     <JoinVideoOptionsContainer/>
-        //                 )
-        //                 : null}
-        //             <DesktopShare {...{
-        //                 handleShareScreen,
-        //                 handleUnshareScreen,
-        //                 isVideoBroadcasting,
-        //                 amIPresenter,
-        //                 screenSharingCheck,
-        //                 screenShareEndAlert,
-        //                 isMeteorConnected,
-        //                 screenshareDataSavingSetting,
-        //             }}
-        //             />
-        //         </div>
-        //         <div className={styles.right}>
-        //             {isLayoutSwapped
-        //                 ? (
-        //                     <PresentationOptionsContainer
-        //                         toggleSwapLayout={toggleSwapLayout}
-        //                         isThereCurrentPresentation={isThereCurrentPresentation}
-        //                     />
-        //                 )
-        //                 : null
-        //             }
-        //         </div>
-        //     </div>
-        // );
     }
 }
 
