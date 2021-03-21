@@ -9,6 +9,8 @@ import { styles } from './styles.scss';
 import MessageForm from './message-form/container';
 import MessageList from './message-list/container';
 import ChatDropdown from './chat-dropdown/component';
+import { connect } from 'react-redux';
+import { setChatBox, setInviteBox, setPanelOpened } from '../../../redux/actions';
 
 const ELEMENT_ID = 'chat-messages';
 
@@ -53,6 +55,9 @@ const Chat = (props) => {
       className={styles.chat}
     >
       <header className={styles.header}>
+        <h3>
+          Meeting Chat
+        </h3>
         {
           chatID !== 'public'
             ? (
@@ -64,8 +69,8 @@ const Chat = (props) => {
                 hideLabel
                 onClick={() => {
                   actions.handleClosePrivateChat(chatID);
-                  Session.set('idChatOpen', '');
-                  Session.set('openPanel', 'userlist');
+                  this.props.setPanelOpened(false)
+                  this.props.setChatBox(false)
                 }}
                 aria-label={intl.formatMessage(intlMessages.closeChatLabel, { 0: title })}
                 label={intl.formatMessage(intlMessages.closeChatLabel, { 0: title })}
@@ -108,7 +113,19 @@ const Chat = (props) => {
   );
 };
 
-export default withShortcutHelper(injectWbResizeEvent(injectIntl(memo(Chat))), ['hidePrivateChat', 'closePrivateChat']);
+const mapStateToProps = state => {
+  return {
+    isPanelOpened: state.panel.isPanelOpened,
+    isChatBox: state.panel.isChatBox,
+    isInviteBox: state.panel.isInviteBox
+  };
+};
+
+export default connect(mapStateToProps, {
+  setPanelOpened,
+  setChatBox,
+  setInviteBox
+})(withShortcutHelper(injectWbResizeEvent(injectIntl(memo(Chat))), ['hidePrivateChat', 'closePrivateChat']));
 
 const propTypes = {
   chatID: PropTypes.string.isRequired,
