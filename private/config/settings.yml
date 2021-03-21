@@ -8,7 +8,7 @@ public:
     forceListenOnly: false
     skipCheck: false
     clientTitle: BigBlueButton
-    appName: BigBlueButton HTML5 Client
+    appName: Letsmeet HTML5 Client
     bbbServerVersion: 2.2
     copyright: "©2021 BigBlueButton Inc."
     html5ClientBuild: HTML5_CLIENT_VERSION

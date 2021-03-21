@@ -1,7 +1,15 @@
 import React from 'react'
 import DropdownListItem from '/imports/ui/components/dropdown/list/item/component';
 import styles from './styles.scss'
+import { defineMessages } from 'react-intl';
 const ROLE_MODERATOR = Meteor.settings.public.user.role_moderator;
+
+const messages = defineMessages({
+  ClearStatusLabel: {
+    id: 'app.userList.menu.clearStatus.label',
+    description: 'Clear the emoji status of this user',
+  },
+})
 
 class StatusDropdown extends React.Component {
 
@@ -22,6 +30,12 @@ class StatusDropdown extends React.Component {
     );
   }
 
+  onActionsHide = (callback) => {
+    if (callback) {
+      return callback;
+    }
+  }
+
   getActions = () => {
     const {
       isMeteorConnected,
@@ -38,6 +52,7 @@ class StatusDropdown extends React.Component {
 
     const {
       allowedToChangeStatus,
+      allowedToResetStatus,
     } = actionPermissions;
 
     let actions = []
@@ -51,6 +66,14 @@ class StatusDropdown extends React.Component {
         },
         getEmojiList[status],
       )));
+    }
+    if (allowedToResetStatus && currentUser.emoji !== 'none' && isMeteorConnected) {
+      actions.push(this.makeDropdownItem(
+        'clearStatus',
+        intl.formatMessage(messages.ClearStatusLabel),
+        () => this.onActionsHide(setEmojiStatus(currentUser.userId, 'none')),
+        'clear_status',
+      ));
     }
     return actions
   }

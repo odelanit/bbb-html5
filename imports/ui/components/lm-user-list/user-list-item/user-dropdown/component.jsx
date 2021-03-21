@@ -325,14 +325,14 @@ class UserDropdown extends PureComponent {
       ));
     }
 
-    if (allowedToResetStatus && user.emoji !== 'none' && isMeteorConnected) {
-      actions.push(this.makeDropdownItem(
-        'clearStatus',
-        intl.formatMessage(messages.ClearStatusLabel),
-        () => this.onActionsHide(setEmojiStatus(user.userId, 'none')),
-        'clear_status',
-      ));
-    }
+    // if (allowedToResetStatus && user.emoji !== 'none' && isMeteorConnected) {
+    //   actions.push(this.makeDropdownItem(
+    //     'clearStatus',
+    //     intl.formatMessage(messages.ClearStatusLabel),
+    //     () => this.onActionsHide(setEmojiStatus(user.userId, 'none')),
+    //     'clear_status',
+    //   ));
+    // }
 
     if (allowedToMuteAudio && isMeteorConnected && !meetingIsBreakout) {
       actions.push(this.makeDropdownItem(
