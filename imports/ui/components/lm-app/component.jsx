@@ -340,6 +340,8 @@ class App extends Component {
       User
     } = this.props;
 
+    console.log("UserInfo: ", UserInfo)
+
     return (UserInfo.length > 0 ? (
       <UserInfoContainer
         UserInfo={UserInfo}
