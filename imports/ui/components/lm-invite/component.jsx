@@ -5,13 +5,23 @@ import {setPanelOpened} from "/imports/redux/actions";
 
 class Invite extends React.Component {
     state = {
-        keyword: ''
+        keyword: '',
+        contacts: []
+    }
+
+    async componentDidMount() {
+        const data = await getContacts(this.props.currentUser.extId, this.state.keyword)
+        this.setState({
+            contacts: data
+        })
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevState.keyword !== this.state.keyword) {
             const data = await getContacts(this.props.currentUser.extId, this.state.keyword)
-            console.log(data)
+            this.setState({
+                contacts: data
+            })
         }
     }
 
@@ -40,6 +50,24 @@ class Invite extends React.Component {
                             )
                         }
                     </div>
+                </div>
+                <div className="contact-list">
+                    {this.state.contacts.map(contact => (
+                        <div className="contact-item box">
+                            <div className="media">
+                                <div className="media-left">
+                                    <figure className="image is-24x24">
+                                        <img src="img/prof1.png" />
+                                    </figure>
+                                </div>
+                                <div className="media-content">
+                                    <div className="content">
+                                        <p>lorem ipsum dolor sit amet, </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         )
