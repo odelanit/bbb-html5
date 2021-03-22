@@ -36,7 +36,7 @@ class Invite extends React.Component {
                 <div className="is-flex is-align-items-center is-justify-content-space-between mb-4">
                     <h3 style={{fontSize: '24px'}}>Invite people</h3>
                     <div>
-                        <span onClick={this.handleClose}><i className="fa fa-times" /></span>
+                        <span onClick={this.handleClose}><i className="fa fa-times"/></span>
                     </div>
                 </div>
                 <div className="field">
@@ -58,12 +58,13 @@ class Invite extends React.Component {
                             <div className="media">
                                 <div className="media-left">
                                     <figure className="image is-48x48">
-                                        <img src="img/prof1.png" />
+                                        {contact.avatar_url ? (<img src={contact.avatar_url}/>) : (<img
+                                            src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"/>)}
                                     </figure>
                                 </div>
                                 <div className="media-content">
                                     <div className="content">
-                                        <h4>{contact.first_name} {contact.last_name}</h4>
+                                        <h5>{contact.first_name} {contact.last_name}</h5>
                                         <div className="columns">
                                             <div className="column is-two-thirds">
                                                 {contact.department}, {contact.company}
