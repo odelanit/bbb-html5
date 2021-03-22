@@ -2,7 +2,9 @@ import Breakouts from '/imports/api/breakouts';
 import Meetings from '/imports/api/meetings';
 import Settings from '/imports/ui/services/settings';
 import Auth from '/imports/ui/services/auth/index';
-import Users from "../../../api/users";
+import Users from "/imports/api/users";
+
+const ROLE_MODERATOR = Meteor.settings.public.user.role_moderator;
 
 const getFontSize = () => {
     const applicationSettings = Settings.application;
