@@ -14,9 +14,14 @@ class Invite extends React.Component {
     async componentDidMount() {
         const contacts = await getContacts(this.props.currentUser.extId, this.state.keyword)
         const guests = await getGuests(this.props.meetingProp.extId)
+        guests.forEach(guest => {
+            let index = contacts.findIndex(c => c.id === guest.id)
+            if (index > -1) {
+                contacts[index]['invited'] = true
+            }
+        })
         this.setState({
             contacts,
-            guests
         })
     }
 
@@ -24,9 +29,14 @@ class Invite extends React.Component {
         if (prevState.keyword !== this.state.keyword) {
             const contacts = await getContacts(this.props.currentUser.extId, this.state.keyword)
             const guests = await getGuests(this.props.meetingProp.extId)
+            guests.forEach(guest => {
+                let index = contacts.findIndex(c => c.id === guest.id)
+                if (index > -1) {
+                    contacts[index]['invited'] = true
+                }
+            })
             this.setState({
                 contacts,
-                guests
             })
         }
     }
@@ -77,7 +87,7 @@ class Invite extends React.Component {
                                             </div>
                                             <div className="column">
                                                 <label className="checkbox">
-                                                    <input type="checkbox"/>
+                                                    <input type="checkbox" checked={contact.invited}/>
                                                     Invite
                                                 </label>
                                             </div>
