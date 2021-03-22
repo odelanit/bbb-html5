@@ -249,7 +249,6 @@ class SettingsDropdown extends PureComponent {
 
   render() {
     const {
-      shortcuts: OPEN_OPTIONS_AK,
       currentUser,
     } = this.props;
 
