@@ -53,10 +53,10 @@ class Invite extends React.Component {
                 </div>
                 <div className="contact-list">
                     {this.state.contacts.map(contact => (
-                        <div className="contact-item box">
+                        <div className="contact-item box" key={contact.id}>
                             <div className="media">
                                 <div className="media-left">
-                                    <figure className="image is-24x24">
+                                    <figure className="image is-48x48">
                                         <img src="img/prof1.png" />
                                     </figure>
                                 </div>
