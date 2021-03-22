@@ -4,6 +4,8 @@ import browser from 'browser-detect';
 import SettingsDropdown from './component';
 import FullscreenService from '../../fullscreen-button/service';
 import { meetingIsBreakout } from '/imports/ui/components/app/service';
+import Users from '/imports/api/users';
+import Auth from '/imports/ui/services/auth';
 
 const BROWSER_RESULTS = browser();
 const isSafari = BROWSER_RESULTS.name === 'safari';
@@ -16,11 +18,13 @@ const SettingsDropdownContainer = props => (
 
 export default withTracker((props) => {
   const handleToggleFullscreen = () => FullscreenService.toggleFullScreen();
+  const currentUser = Users.findOne({ userId: Auth.userID }, { fields: {} });
   return {
     amIModerator: props.amIModerator,
     handleToggleFullscreen,
     noIOSFullscreen,
     isMeteorConnected: Meteor.status().connected,
     isBreakoutRoom: meetingIsBreakout(),
+    currentUser,
   };
 })(SettingsDropdownContainer);

@@ -23,10 +23,10 @@ import {
 import { withModalMounter } from '../modal/service';
 
 import App from './component';
-import NavBarContainer from '../nav-bar/container';
+import NavBarContainer from '../lm-nav-bar/container';
 import ActionsBarContainer from '/imports/ui/components/lm-actions-bar/container';
 import MediaContainer from '../media/container';
-import UserListService from "../user-list/service";
+import UserListService from '../user-list/service';
 
 const propTypes = {
   navbar: PropTypes.node,
@@ -74,9 +74,9 @@ const currentUserEmoji = currentUser => (currentUser ? {
   status: currentUser.emoji,
   changedAt: currentUser.emojiTime,
 } : {
-    status: 'none',
-    changedAt: null,
-  });
+  status: 'none',
+  changedAt: null,
+});
 
 export default injectIntl(withModalMounter(withTracker(({ intl, baseControls }) => {
   const currentUser = Users.findOne({ userId: Auth.userID }, { fields: { approved: 1, emoji: 1 } });
