@@ -58,8 +58,9 @@ class Invite extends React.Component {
                             <div className="media">
                                 <div className="media-left">
                                     <figure className="image is-48x48">
-                                        {contact.avatar_url ? (<img src={glDomain + contact.avatar_url}/>) : (<img
-                                            src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"/>)}
+                                        {/*{contact.avatar_url ? (<img src={glDomain + contact.avatar_url}/>) : (<img*/}
+                                        {/*    src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"/>)}*/}
+                                        <img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"/>
                                     </figure>
                                 </div>
                                 <div className="media-content">
