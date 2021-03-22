@@ -252,7 +252,6 @@ class SettingsDropdown extends PureComponent {
       shortcuts: OPEN_OPTIONS_AK,
       currentUser,
     } = this.props;
-    console.log('currentUser:', currentUser);
 
     return (
       <li className="navbar-item has-dropdown is-hoverable">
