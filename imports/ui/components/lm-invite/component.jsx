@@ -63,7 +63,18 @@ class Invite extends React.Component {
                                 </div>
                                 <div className="media-content">
                                     <div className="content">
-                                        <p>lorem ipsum dolor sit amet, </p>
+                                        <h4>{contact.first_name} {contact.last_name}</h4>
+                                        <div className="columns">
+                                            <div className="column is-two-thirds">
+                                                {contact.department}, {contact.company}
+                                            </div>
+                                            <div className="column">
+                                                <label className="checkbox">
+                                                    <input type="checkbox"/>
+                                                    Invite
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
