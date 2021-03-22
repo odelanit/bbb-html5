@@ -229,25 +229,6 @@ class App extends Component {
     return openPanel !== '' && (isPhone || isLayeredView.matches);
   }
 
-  renderPanel() {
-    const { enableResize } = this.state;
-    const {
-      openPanel,
-      isRTL
-    } = this.props;
-
-    return (
-      <PanelManager
-        {...{
-          openPanel,
-          enableResize,
-          isRTL,
-        }}
-        shouldAriaHide={this.shouldAriaHide}
-      />
-    );
-  }
-
   renderNavBar() {
     const { navbar } = this.props;
 
@@ -257,18 +238,6 @@ class App extends Component {
       <>
         {navbar}
       </>
-    );
-  }
-
-  renderSidebar() {
-    const { sidebar } = this.props;
-
-    if (!sidebar) return null;
-
-    return (
-      <aside className={styles.sidebar}>
-        {sidebar}
-      </aside>
     );
   }
 
@@ -307,7 +276,6 @@ class App extends Component {
   renderActionsBar() {
     const {
       actionsbar,
-      intl,
     } = this.props;
 
     if (!actionsbar) return null;
@@ -338,10 +306,7 @@ class App extends Component {
     const {
       UserInfo,
       User,
-      currentMeeting
     } = this.props;
-
-    console.log("currentMeeting: ", currentMeeting)
 
     return (UserInfo.length > 0 ? (
       <UserInfoContainer
@@ -355,8 +320,6 @@ class App extends Component {
     const {
       customStyle,
       customStyleUrl,
-      openPanel,
-      users,
     } = this.props;
     return (
       <main>

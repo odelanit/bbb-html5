@@ -133,7 +133,6 @@ export default injectIntl(withModalMounter(withTracker(({ intl, baseControls }) 
     startBandwidthMonitoring,
     handleNetworkConnection: () => updateNavigatorConnection(navigator.connection),
     users: UserListService.getUsers(),
-    currentMeeting
   };
 })(AppContainer)));
 

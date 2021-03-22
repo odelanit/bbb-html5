@@ -1,5 +1,5 @@
 import React from 'react'
-import {getContacts, glDomain} from "./service";
+import {getContacts, getGuests, glDomain} from "./service";
 import {connect} from "react-redux";
 import {setPanelOpened} from "/imports/redux/actions";
 import {styles} from './styles'
@@ -7,21 +7,26 @@ import {styles} from './styles'
 class Invite extends React.Component {
     state = {
         keyword: '',
-        contacts: []
+        contacts: [],
+        guests: []
     }
 
     async componentDidMount() {
-        const data = await getContacts(this.props.currentUser.extId, this.state.keyword)
+        const contacts = await getContacts(this.props.currentUser.extId, this.state.keyword)
+        const guests = await getGuests(this.props.meetingProp.extId)
         this.setState({
-            contacts: data
+            contacts,
+            guests
         })
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevState.keyword !== this.state.keyword) {
-            const data = await getContacts(this.props.currentUser.extId, this.state.keyword)
+            const contacts = await getContacts(this.props.currentUser.extId, this.state.keyword)
+            const guests = await getGuests(this.props.meetingProp.extId)
             this.setState({
-                contacts: data
+                contacts,
+                guests
             })
         }
     }
