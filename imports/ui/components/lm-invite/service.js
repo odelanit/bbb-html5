@@ -11,3 +11,8 @@ export const getContacts = async (uid, keyword) => {
     const response = await axios.get(`${glDomain}/api/contacts?uid=${uid}&keyword=${keyword}`)
     return response.data
 }
+
+export const inviteGuest = async (payload) => {
+    const response = await axios.post(`${glDomain}/api/guests`, payload)
+    return response.data
+}

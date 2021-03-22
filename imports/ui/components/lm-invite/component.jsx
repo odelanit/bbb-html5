@@ -1,5 +1,5 @@
 import React from 'react'
-import {getContacts, getGuests, glDomain} from "./service";
+import {getContacts, getGuests, glDomain, inviteGuest} from "./service";
 import {connect} from "react-redux";
 import {setPanelOpened} from "/imports/redux/actions";
 import {styles} from './styles'
@@ -8,7 +8,6 @@ class Invite extends React.Component {
     state = {
         keyword: '',
         contacts: [],
-        guests: []
     }
 
     async componentDidMount() {
@@ -43,6 +42,22 @@ class Invite extends React.Component {
 
     handleClose = () => {
         this.props.setPanelOpened(false)
+    }
+
+    toggleInvite = async (contact) => {
+        if (contact.invited) {
+            contact.invited = false
+        } else {
+            const data = await inviteGuest({
+                uid: this.props.meetingProp.extId,
+                contact_id: contact.id
+            })
+            contact.invited = data.invited
+        }
+        let index = this.state.contacts.findIndex(c => c.id === contact.id)
+        let contacts = [...this.state.contacts]
+        contacts[index] = contact
+        this.setState({contacts})
     }
 
     render() {
@@ -87,7 +102,7 @@ class Invite extends React.Component {
                                             </div>
                                             <div className="column">
                                                 <label className="checkbox">
-                                                    <input type="checkbox" checked={contact.invited}/>
+                                                    <input type="checkbox" checked={contact.invited} onChange={() => this.toggleInvite(contact)}/>
                                                     Invite
                                                 </label>
                                             </div>
