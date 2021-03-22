@@ -22,8 +22,8 @@ class Invite extends React.Component {
     render() {
         return (
             <div className="p-4">
-                <div className="is-flex is-align-items-center">
-                    <h3 className="mb-4" style={{fontSize: '24px'}}>Invite people</h3>
+                <div className="is-flex is-align-items-center is-justify-content-space-between mb-4">
+                    <h3 style={{fontSize: '24px'}}>Invite people</h3>
                     <div>
                         <span onClick={this.handleClose}><i className="fa fa-times" /></span>
                     </div>
