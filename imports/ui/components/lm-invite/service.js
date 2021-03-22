@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const glDomain = 'http://13.126.52.183'
+export const glDomain = 'https://vdo.quadridge.com'
 
 export const getGuests = async (meetingId) => {
     const response = await axios.get(`${glDomain}/api/guests?uid=${meetingId}`)
