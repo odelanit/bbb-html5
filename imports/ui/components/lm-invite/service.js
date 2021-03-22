@@ -8,6 +8,6 @@ export const getGuests = async (uid, meetingId) => {
 }
 
 export const getContacts = async (uid, keyword) => {
-    const response = await axios.get(`${glDomain}/api/contact?uid=${uid}&keyword=${keyword}`)
+    const response = await axios.get(`${glDomain}/api/contacts?uid=${uid}&keyword=${keyword}`)
     return response.data
 }
