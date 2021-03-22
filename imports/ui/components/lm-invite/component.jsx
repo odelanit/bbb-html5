@@ -48,10 +48,7 @@ class Invite extends React.Component {
         if (contact.invited) {
             contact.invited = false
         } else {
-            const data = await inviteGuest({
-                uid: this.props.meetingProp.extId,
-                contact_id: contact.id
-            })
+            const data = await inviteGuest(this.props.meetingProp.extId, contact.id)
             contact.invited = data.invited
         }
         let index = this.state.contacts.findIndex(c => c.id === contact.id)

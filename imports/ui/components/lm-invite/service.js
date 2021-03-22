@@ -12,7 +12,7 @@ export const getContacts = async (uid, keyword) => {
     return response.data
 }
 
-export const inviteGuest = async (payload) => {
-    const response = await axios.post(`${glDomain}/api/invite`, payload)
+export const inviteGuest = async (uid, contactId) => {
+    const response = await axios.get(`${glDomain}/api/invite?uid=${uid}&contact_id=${contactId}`)
     return response.data
 }
