@@ -337,10 +337,11 @@ class App extends Component {
   renderUserInformation() {
     const {
       UserInfo,
-      User
+      User,
+      currentMeeting
     } = this.props;
 
-    console.log("UserInfo: ", UserInfo)
+    console.log("currentMeeting: ", currentMeeting)
 
     return (UserInfo.length > 0 ? (
       <UserInfoContainer
