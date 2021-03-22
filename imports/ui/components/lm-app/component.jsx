@@ -357,7 +357,7 @@ class App extends Component {
                     {this.props.isChatBox && (
                       <ChatContainer/>
                     )}
-                    {this.props.isInviteBox && (
+                    {this.props.isInviteBox && this.props.amIModerator && (
                       <InviteContainer/>
                     )}
                   </div>
