@@ -256,7 +256,7 @@ class SettingsDropdown extends PureComponent {
     return (
       <li className="navbar-item has-dropdown is-hoverable">
         <a className="navbar-link">
-          <figure className="image">
+          <figure className="image is-24x24">
             <img className="is-rounded" src={currentUser.avatar} />
           </figure>
         </a>
