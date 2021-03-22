@@ -2,6 +2,7 @@ import React from 'react'
 import {getContacts} from "./service";
 import {connect} from "react-redux";
 import {setPanelOpened} from "/imports/redux/actions";
+import {styles} from './styles'
 
 class Invite extends React.Component {
     state = {
@@ -53,7 +54,7 @@ class Invite extends React.Component {
                 </div>
                 <div className="contact-list">
                     {this.state.contacts.map(contact => (
-                        <div className="contact-item box" key={contact.id}>
+                        <div className={styles.contactItem} key={contact.id}>
                             <div className="media">
                                 <div className="media-left">
                                     <figure className="image is-48x48">
