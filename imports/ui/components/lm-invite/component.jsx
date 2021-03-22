@@ -1,5 +1,7 @@
 import React from 'react'
 import {getContacts} from "./service";
+import {connect} from "react-redux";
+import {setPanelOpened} from "/imports/redux/actions";
 
 class Invite extends React.Component {
     state = {
@@ -8,18 +10,24 @@ class Invite extends React.Component {
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevState.keyword !== this.state.keyword) {
-            const data = await getContacts()
+            const data = await getContacts(this.props.currentUser.extId, this.state.keyword)
             console.log(data)
         }
     }
 
-    render() {
-        const {currentUser} = this.props
-        console.log("currentUser: ", currentUser)
+    handleClose = () => {
+        this.props.setPanelOpened(false)
+    }
 
+    render() {
         return (
             <div className="p-4">
-                <h3 className="mb-4" style={{fontSize: '24px'}}>Invite people</h3>
+                <div className="is-flex is-align-items-center">
+                    <h3 className="mb-4" style={{fontSize: '24px'}}>Invite people</h3>
+                    <div>
+                        <span onClick={this.handleClose}><i className="fa fa-times" /></span>
+                    </div>
+                </div>
                 <div className="field">
                     <div className="control has-icons-left">
                         <input className="input" type="text" value={this.state.keyword}
@@ -38,4 +46,6 @@ class Invite extends React.Component {
     }
 }
 
-export default Invite
+export default connect(null, {
+    setPanelOpened,
+})(Invite)
