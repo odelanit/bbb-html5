@@ -70,6 +70,9 @@ class ActionsBar extends PureComponent {
         />
         <StatusDropdownContainer/>
         <figure className="image is-44x44" onClick={this.handleMessageClicked}>
+          {this.props.unreadPublicCounter > 0 && (
+              <span className="badge is-danger">{this.props.unreadPublicCounter}</span>
+          )}
           <img src="img/MessageIcon.png"/>
         </figure>
         <ActionsDropdown {...{
