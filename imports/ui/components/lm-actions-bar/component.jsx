@@ -41,6 +41,7 @@ class ActionsBar extends PureComponent {
       isMeteorConnected,
       isPollingEnabled,
       allowExternalVideo,
+        publicChat
     } = this.props;
 
     const actionBarClasses = {};
@@ -73,7 +74,7 @@ class ActionsBar extends PureComponent {
           {/*{this.props.unreadPublicCounter > 0 && (*/}
           {/*    */}
           {/*)}*/}
-          <span className="badge is-danger">{this.props.unreadPublicCounter}</span>
+          <span className="badge is-danger">{publicChat.unreadCounter}</span>
           <img src="img/MessageIcon.png"/>
         </figure>
         <ActionsDropdown {...{
