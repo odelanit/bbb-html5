@@ -16,8 +16,8 @@ class ActionsBar extends PureComponent {
   handleMessageClicked = () => {
     const isPanelOpened = this.props.isPanelOpened;
     Session.set('openPanel', 'chat');
-    Session.set('idChatOpen', PUBLIC_CHAT_ID);
-    this.props.setPanelOpened(true);
+    isPanelOpened ? Session.set('idChatOpen', '') : Session.set('idChatOpen', PUBLIC_CHAT_ID)
+    this.props.setPanelOpened(!isPanelOpened);
     this.props.setChatBox(true);
     this.props.setInviteBox(false);
   };
@@ -70,9 +70,10 @@ class ActionsBar extends PureComponent {
         />
         <StatusDropdownContainer/>
         <figure className="image is-44x44" onClick={this.handleMessageClicked}>
-          {this.props.unreadPublicCounter > 0 && (
-              <span className="badge is-danger">{this.props.unreadPublicCounter}</span>
-          )}
+          {/*{this.props.unreadPublicCounter > 0 && (*/}
+          {/*    */}
+          {/*)}*/}
+          <span className="badge is-danger">{this.props.unreadPublicCounter}</span>
           <img src="img/MessageIcon.png"/>
         </figure>
         <ActionsDropdown {...{

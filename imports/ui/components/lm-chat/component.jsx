@@ -69,6 +69,7 @@ const Chat = (props) => {
                 hideLabel
                 onClick={() => {
                   actions.handleClosePrivateChat(chatID);
+                  Session.set('idChatOpen', '');
                   props.setPanelOpened(false)
                   props.setChatBox(false)
                 }}
