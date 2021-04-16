@@ -16,3 +16,8 @@ export const inviteGuest = async (uid, contactId) => {
     const response = await axios.get(`${glDomain}/api/invite?uid=${uid}&contact_id=${contactId}`)
     return response.data
 }
+
+export const addContact = async (uid, email) => {
+    const response = await axios.get(`${glDomain}/api/add_contact?uid=${uid}&email=${email}`)
+    return response.data
+}

@@ -1,5 +1,5 @@
 import React from 'react'
-import {getContacts, getGuests, glDomain, inviteGuest} from "./service";
+import {addContact, getContacts, getGuests, inviteGuest} from "./service";
 import {connect} from "react-redux";
 import {setPanelOpened} from "/imports/redux/actions";
 import {styles} from './styles'
@@ -11,6 +11,10 @@ class Invite extends React.Component {
     }
 
     async componentDidMount() {
+        await this.getContacts()
+    }
+
+    getContacts = async () => {
         const contacts = await getContacts(this.props.currentUser.extId, this.state.keyword)
         const guests = await getGuests(this.props.meetingProp.extId)
         guests.forEach(guest => {
@@ -26,17 +30,7 @@ class Invite extends React.Component {
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevState.keyword !== this.state.keyword) {
-            const contacts = await getContacts(this.props.currentUser.extId, this.state.keyword)
-            const guests = await getGuests(this.props.meetingProp.extId)
-            guests.forEach(guest => {
-                let index = contacts.findIndex(c => c.id === guest.id)
-                if (index > -1) {
-                    contacts[index]['invited'] = true
-                }
-            })
-            this.setState({
-                contacts,
-            })
+            await this.getContacts()
         }
     }
 
@@ -57,6 +51,24 @@ class Invite extends React.Component {
         this.setState({contacts})
     }
 
+    handleKeyDown = async (event) => {
+        const email = this.state.keyword
+        if (event.keyCode === 13) {
+            if (email) {
+                const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if (re.test(String(email).toLowerCase())) {
+                    try {
+                        await addContact(this.props.currentUser.extId, email)
+                        await this.getContacts()
+                    } catch (e) {
+                        console.error(e)
+                    }
+
+                }
+            }
+        }
+    }
+
     render() {
         return (
             <div className="p-4">
@@ -68,8 +80,12 @@ class Invite extends React.Component {
                 </div>
                 <div className="field">
                     <div className="control has-icons-left">
-                        <input className="input" type="text" value={this.state.keyword}
-                               onChange={(event) => this.setState({keyword: event.target.value})}/>
+                        <input
+                            className="input" type="text"
+                            value={this.state.keyword}
+                            onChange={(event) => this.setState({keyword: event.target.value})}
+                            onKeyDown={this.handleKeyDown}
+                        />
                         <span className="icon is-small is-left"><i className="fa fa-search"/></span>
                         {
                             this.state.keyword && (
@@ -85,9 +101,9 @@ class Invite extends React.Component {
                             <div className="media">
                                 <div className="media-left">
                                     <figure className="image is-48x48">
-                                        {/*{contact.avatar_url ? (<img src={glDomain + contact.avatar_url}/>) : (<img*/}
-                                        {/*    src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"/>)}*/}
-                                        <img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"/>
+                                        {contact.image ? (<img style={{borderRadius: '100%'}} src={contact.image}/>) : (<img
+                                            src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"/>)}
+                                        {/*<img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg"/>*/}
                                     </figure>
                                 </div>
                                 <div className="media-content">
@@ -95,7 +111,7 @@ class Invite extends React.Component {
                                         <h5>{contact.first_name} {contact.last_name}</h5>
                                         <div className="columns">
                                             <div className="column is-two-thirds">
-                                                {contact.department}, {contact.company}
+                                                {contact.email}
                                             </div>
                                             <div className="column">
                                                 <label className="checkbox">
