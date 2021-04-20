@@ -191,7 +191,7 @@ class Dropdown extends Component {
 
     return (
       <div
-        className={cx(styles.dropdown, className)}
+        className={cx("dropdown", className)}
         aria-live={otherProps['aria-live']}
         aria-relevant={otherProps['aria-relevant']}
         aria-haspopup={otherProps['aria-haspopup']}
