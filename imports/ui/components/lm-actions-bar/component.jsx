@@ -8,6 +8,8 @@ import AudioControlsContainer from '../audio/audio-controls/container';
 import JoinVideoOptionsContainer from '../video-provider/video-button/container';
 import { setChatBox, setInviteBox, setPanelOpened } from '/imports/redux/actions';
 import StatusDropdownContainer from './status-dropdown/container';
+import {withModalMounter} from '/imports/ui/components/modal/service';
+import EndMeetingConfirmationContainer from '/imports/ui/components/end-meeting-confirmation/container';
 
 const CHAT_CONFIG = Meteor.settings.public.chat;
 const PUBLIC_CHAT_ID = CHAT_CONFIG.public_id;
@@ -21,6 +23,10 @@ class ActionsBar extends PureComponent {
     this.props.setChatBox(true);
     this.props.setInviteBox(false);
   };
+
+  handleLogoutClicked = () => {
+    console.log(this.props.mountModal(<EndMeetingConfirmationContainer/>))
+  }
 
   render() {
     const {
@@ -88,7 +94,7 @@ class ActionsBar extends PureComponent {
           isMeteorConnected,
         }}
         />
-        <figure className="image is-44x44 call-end">
+        <figure className="image is-44x44 call-end" onClick={this.handleLogoutClicked}>
           <img src="img/CallHang.png"/>
         </figure>
       </>
@@ -108,4 +114,4 @@ export default connect(mapStateToProps, {
   setPanelOpened,
   setChatBox,
   setInviteBox
-})(ActionsBar);
+})(withModalMounter(ActionsBar));
