@@ -8,6 +8,7 @@ class Invite extends React.Component {
     state = {
         keyword: '',
         contacts: [],
+        invited: false
     }
 
     async componentDidMount() {
@@ -43,7 +44,7 @@ class Invite extends React.Component {
         let index = this.state.contacts.findIndex(c => c.id === contact.id)
         let contacts = [...this.state.contacts]
         contacts[index] = contact
-        this.setState({contacts})
+        this.setState({contacts, invited: false})
     }
 
     handleKeyDown = async (event) => {
@@ -68,7 +69,9 @@ class Invite extends React.Component {
         let contacts = this.state.contacts.filter(c => c.invited === true);
         let contactIds = contacts.map(c => c.id)
         try {
-            await inviteGuests(this.props.meetingProp.extId, contactIds)
+            const data = await inviteGuests(this.props.meetingProp.extId, contactIds)
+            const {invited} = data
+            this.setState({invited})
         } catch (e) {
             console.error(e)
         }
@@ -136,6 +139,7 @@ class Invite extends React.Component {
                 </div>
                 <div className="p-4 has-text-right">
                     <button className="button is-info" onClick={this.handleSendInvite}>Send Invite</button>
+                    {this.state.invited && (<p>Invite sent</p>)}
                 </div>
             </div>
         )

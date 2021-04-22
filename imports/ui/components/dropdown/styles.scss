@@ -312,6 +312,7 @@
 .top-right {
   @extend %down-caret;
   @extend %horz-left-caret;
+  width: 200px;
 }
 
 [dir="rtl"] .top-left {

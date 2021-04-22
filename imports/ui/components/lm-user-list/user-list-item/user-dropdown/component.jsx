@@ -3,6 +3,10 @@ import { defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import Icon from '/imports/ui/components/icon/component';
+import Dropdown from '/imports/ui/components/dropdown/component';
+import DropdownTrigger from '/imports/ui/components/dropdown/trigger/component';
+import DropdownContent from '/imports/ui/components/dropdown/content/component';
+import DropdownList from '/imports/ui/components/dropdown/list/component';
 import DropdownListItem from '/imports/ui/components/dropdown/list/item/component';
 import DropdownListSeparator from '/imports/ui/components/dropdown/list/separator/component';
 import lockContextContainer from '/imports/ui/components/lock-viewers/context/container';
@@ -560,19 +564,19 @@ class UserDropdown extends PureComponent {
     if (!actions.length) return contents;
 
     return (
-      <div className="dropdown is-up is-right">
-        <div className="dropdown-trigger">
+      <Dropdown>
+        <DropdownTrigger>
           <figure className="image is-44x44 avatar">
             {/*<img src="img/profile-pic.jpg" className="is-rounded"/>*/}
             {this.renderUserAvatar()}
           </figure>
-        </div>
-        <div className="dropdown-menu">
-          <ul className="dropdown-content">
+        </DropdownTrigger>
+        <DropdownContent placement="top right">
+          <DropdownList className="dropdown-content">
             {actions}
-          </ul>
-        </div>
-      </div>
+          </DropdownList>
+        </DropdownContent>
+      </Dropdown>
     );
   }
 

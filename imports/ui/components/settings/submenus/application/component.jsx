@@ -391,53 +391,53 @@ class ApplicationMenu extends BaseMenu {
             </div>
           </div>
 
-          <hr className={styles.separator} />
-          <div className={styles.row}>
-            <div className={styles.col}>
-              <div className={styles.formElement}>
-                <label className={styles.label}>
-                  {intl.formatMessage(intlMessages.fontSizeControlLabel)}
-                </label>
-              </div>
-            </div>
-            <div className={styles.col}>
-              <div aria-hidden className={cx(styles.formElement, styles.pullContentCenter)}>
-                <label className={cx(styles.label, styles.bold)}>
-                  {`${pixelPercentage[this.state.settings.fontSize]}`}
-                </label>
-              </div>
-            </div>
-            <div className={styles.col}>
-              <div className={cx(styles.formElement, styles.pullContentRight)}>
-                <div className={styles.pullContentRight}>
-                  <div className={styles.col}>
-                    <Button
-                      onClick={() => this.handleDecreaseFontSize()}
-                      color="primary"
-                      icon="substract"
-                      circle
-                      hideLabel
-                      label={intl.formatMessage(intlMessages.decreaseFontBtnLabel)}
-                      aria-label={`${intl.formatMessage(intlMessages.decreaseFontBtnLabel)}, ${ariaValueLabel}`}
-                      disabled={isSmallestFontSize}
-                    />
-                  </div>
-                  <div className={styles.col}>
-                    <Button
-                      onClick={() => this.handleIncreaseFontSize()}
-                      color="primary"
-                      icon="add"
-                      circle
-                      hideLabel
-                      label={intl.formatMessage(intlMessages.increaseFontBtnLabel)}
-                      aria-label={`${intl.formatMessage(intlMessages.increaseFontBtnLabel)}, ${ariaValueLabel}`}
-                      disabled={isLargestFontSize}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/*<hr className={styles.separator} />*/}
+          {/*<div className={styles.row}>*/}
+          {/*  <div className={styles.col}>*/}
+          {/*    <div className={styles.formElement}>*/}
+          {/*      <label className={styles.label}>*/}
+          {/*        {intl.formatMessage(intlMessages.fontSizeControlLabel)}*/}
+          {/*      </label>*/}
+          {/*    </div>*/}
+          {/*  </div>*/}
+          {/*  <div className={styles.col}>*/}
+          {/*    <div aria-hidden className={cx(styles.formElement, styles.pullContentCenter)}>*/}
+          {/*      <label className={cx(styles.label, styles.bold)}>*/}
+          {/*        {`${pixelPercentage[this.state.settings.fontSize]}`}*/}
+          {/*      </label>*/}
+          {/*    </div>*/}
+          {/*  </div>*/}
+          {/*  <div className={styles.col}>*/}
+          {/*    <div className={cx(styles.formElement, styles.pullContentRight)}>*/}
+          {/*      <div className={styles.pullContentRight}>*/}
+          {/*        <div className={styles.col}>*/}
+          {/*          <Button*/}
+          {/*            onClick={() => this.handleDecreaseFontSize()}*/}
+          {/*            color="primary"*/}
+          {/*            icon="substract"*/}
+          {/*            circle*/}
+          {/*            hideLabel*/}
+          {/*            label={intl.formatMessage(intlMessages.decreaseFontBtnLabel)}*/}
+          {/*            aria-label={`${intl.formatMessage(intlMessages.decreaseFontBtnLabel)}, ${ariaValueLabel}`}*/}
+          {/*            disabled={isSmallestFontSize}*/}
+          {/*          />*/}
+          {/*        </div>*/}
+          {/*        <div className={styles.col}>*/}
+          {/*          <Button*/}
+          {/*            onClick={() => this.handleIncreaseFontSize()}*/}
+          {/*            color="primary"*/}
+          {/*            icon="add"*/}
+          {/*            circle*/}
+          {/*            hideLabel*/}
+          {/*            label={intl.formatMessage(intlMessages.increaseFontBtnLabel)}*/}
+          {/*            aria-label={`${intl.formatMessage(intlMessages.increaseFontBtnLabel)}, ${ariaValueLabel}`}*/}
+          {/*            disabled={isLargestFontSize}*/}
+          {/*          />*/}
+          {/*        </div>*/}
+          {/*      </div>*/}
+          {/*    </div>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
         </div>
       </div>
     );

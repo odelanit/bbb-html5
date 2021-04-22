@@ -13,7 +13,7 @@ main {
 
 .wrapper .container.main {
     padding-top: 4.375rem;
-    padding-bottom: 60px;
+    padding-bottom: 35px;
     height: 100vh;
 }
 
@@ -49,7 +49,7 @@ main {
     position: fixed;
     bottom: 0;
     width: 100%;
-    padding: 1rem 2rem;
+    padding: .5rem 2rem;
 }
 
 .image.is-44x44 {
