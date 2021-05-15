@@ -367,7 +367,7 @@ class App extends Component {
           </div>
           <footer className="footer is-fixed-bottom">
             <div className="content has-text-centered">
-              <span>Copyright &copy; LetsMeet 2020</span>
+              <span>Copyright &copy; VDO, Quadridge Technologies Private Limited</span>
             </div>
           </footer>
         </div>

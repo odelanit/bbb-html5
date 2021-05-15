@@ -42,8 +42,8 @@ const AboutComponent = ({ intl, clientBuild, copyright }) => (
       description: intl.formatMessage(intlMessages.dismissDesc),
     }}
   >
-    {`${intl.formatMessage(intlMessages.copyright)} ${copyright}`} <br />
-    {`${intl.formatMessage(intlMessages.version)} ${clientBuild}`}
+    {`${intl.formatMessage(intlMessages.copyright)} VDO, Quadridge Technologies Private Limited`} <br />
+    {`${intl.formatMessage(intlMessages.version)} 1.1.B`}
   </Modal>
 );
 
