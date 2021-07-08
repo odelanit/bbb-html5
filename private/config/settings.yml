@@ -290,7 +290,7 @@ public:
     url: ETHERPAD_HOST
   layout:
     autoSwapLayout: true
-    hidePresentation: true
+    hidePresentation: false
   media:
     stunTurnServersFetchAddress: "/bigbluebutton/api/stuns"
     cacheStunTurnServers: true
