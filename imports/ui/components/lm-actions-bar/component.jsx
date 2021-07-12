@@ -15,18 +15,48 @@ import EndMeetingConfirmationContainer from '/imports/ui/components/end-meeting-
 import PresentationOptionsContainer from './presentation-options/component';
 import QuickPollDropdown from './quick-poll-dropdown/component';
 
+import Button from '/imports/ui/components/button/component';
+import { defineMessages, injectIntl } from 'react-intl';
+
 const CHAT_CONFIG = Meteor.settings.public.chat;
 const PUBLIC_CHAT_ID = CHAT_CONFIG.public_id;
+
+const intlMessages = defineMessages({
+  hideNoteLabel: {
+    id: 'app.note.hideNoteLabel',
+    description: 'Label for hiding note button',
+  },
+  notetitle: {
+    id: 'app.note.title',
+    description: 'Title for the shared notes',
+  }
+});
 
 class ActionsBar extends PureComponent {
   handleMessageClicked = () => {
     const isPanelOpened = this.props.isPanelOpened;
     Session.set('openPanel', 'chat');
     isPanelOpened ? Session.set('idChatOpen', '') : Session.set('idChatOpen', PUBLIC_CHAT_ID)
-    this.props.setPanelOpened(!isPanelOpened);
-    this.props.setChatBox(true);
-    this.props.setInviteBox(false);
+    // this.props.setPanelOpened(!isPanelOpened);
+    // this.props.setChatBox(true);
+    // this.props.setInviteBox(false);
   };
+
+  handleInviteClicked = () => {
+    // this.props.setPanelOpened(true)
+    // this.props.setChatBox(false)
+    // this.props.setInviteBox(true)
+    Session.set('openPanel', 'invite');
+  };
+  openUserPanel = ()=>{
+    console.log('@vdo im-action-bar openUserPanel openPanle',this.props.openPanel)
+    if(this.props.openPanel || Session.get('openPanle')){
+      Session.set('openPanel', false);
+    }
+    else{
+      Session.set('openPanel', true);
+    }
+  }
 
   handleLogoutClicked = () => {
     console.log(this.props.mountModal(<EndMeetingConfirmationContainer/>))
@@ -63,7 +93,7 @@ class ActionsBar extends PureComponent {
     actionBarClasses[styles.centerWithActions] = amIPresenter;
     actionBarClasses[styles.center] = true;
     actionBarClasses[styles.mobileLayoutSwapped] = isLayoutSwapped && amIPresenter;
-    console.log("@vdo isThereCurrentPresentation : ",isThereCurrentPresentation);
+    console.log("@GOD isThereCurrentPresentation : ",isThereCurrentPresentation);
     return (
       <>
 
@@ -124,6 +154,16 @@ class ActionsBar extends PureComponent {
         <figure className="image is-44x44 call-end" onClick={this.handleLogoutClicked}>
           <img src="img/CallHang.png"/>
         </figure>
+        <Button
+              label={intl.formatMessage(intlMessages.notetitle)}
+              aria-label={intl.formatMessage(intlMessages.notetitle)}
+              icon="polling"
+              onClick={() => {Session.set('openPanel','poll')}}
+              hideLabel
+              circle
+              size="lg"
+              color="vdowarning"
+            />
         </div>
         </div>
         <div className="column">
@@ -131,7 +171,7 @@ class ActionsBar extends PureComponent {
           
           <div className="meeting-c">
             {/* <div className={cx('vdo-presentation',styles.right)}> */}
-            <div className={cx('vdo-presentation',styles.right)}>
+            <div className={cx('vdo-presentation')}>
               {isLayoutSwapped
                 ? (
                   <PresentationOptionsContainer
@@ -142,11 +182,25 @@ class ActionsBar extends PureComponent {
                 : null
               }
             </div>
+            <Button
+              label={intl.formatMessage(intlMessages.notetitle)}
+              aria-label={intl.formatMessage(intlMessages.notetitle)}
+              icon="copy"
+              onClick={() => {Session.set('openPanel','note')}}
+              hideLabel
+              circle
+              size="lg"
+              color="vdoprimary"
+            />
             {amIModerator && (
               <figure className="image is-44x44" onClick={this.handleInviteClicked}>
                 <img src="img/TeamAdd.png"/>
               </figure>
             )}
+
+              <figure className="image is-44x44" onClick={this.openUserPanel}>
+                <img src="img/TeamAdd.png"/>
+              </figure>
           </div>
         </div>
       </>
@@ -162,8 +216,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {
+export default injectIntl(connect(mapStateToProps, {
   setPanelOpened,
   setChatBox,
   setInviteBox
-})(withModalMounter(ActionsBar));
+})(withModalMounter(ActionsBar)));

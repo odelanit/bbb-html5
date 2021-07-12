@@ -42,6 +42,12 @@
 
   --btn-jumbo-font-size: 3rem;
   --btn-jumbo-padding: var(--jumbo-padding-y) var(--jumbo-padding-x);
+
+  --btn-vdoprimary-color:var(--color-white);
+  --btn-vdoprimary-bg:#0c4a94;
+  --btn-vdowarning-color:var(--color-white);
+  --btn-vdowarning-bg:rgb(235, 104, 16);
+  
 }
 
 .button {
@@ -253,6 +259,15 @@
 .primary {
   @include button-variant(var(--btn-primary-color), var(--btn-primary-bg), var(--btn-primary-border));
 }
+
+.vdoprimary {
+  @include button-variant(var(--btn-vdoprimary-color), var(--btn-vdoprimary-bg), var(--btn-vdoprimary-border));
+}
+
+.vdowarning {
+  @include button-variant(var(--btn-vdowarning-color), var(--btn-vdowarning-bg), var(--btn-vdowarning-border));
+}
+
 
 .success {
   @include button-variant(var(--btn-success-color), var(--btn-success-bg), var(--btn-success-border));

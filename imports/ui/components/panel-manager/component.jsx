@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import BreakoutRoomContainer from '/imports/ui/components/breakout-room/container';
 import UserListContainer from '/imports/ui/components/user-list/container';
 import ChatContainer from '/imports/ui/components/chat/container';
+import InviteContainer from '/imports/ui/components/lm-invite/container';
 import NoteContainer from '/imports/ui/components/note/container';
 import PollContainer from '/imports/ui/components/poll/container';
 import CaptionsContainer from '/imports/ui/components/captions/pad/container';
@@ -206,6 +207,56 @@ class PanelManager extends PureComponent {
     );
   }
 
+
+  renderInvite() {
+    const { intl, enableResize } = this.props;
+
+    return (
+      <section
+        className={styles.chat}
+        aria-label={intl.formatMessage(intlMessages.chatLabel)}
+        key={enableResize ? null : this.chatKey}
+      >
+        <InviteContainer />
+      </section>
+    );
+  }
+
+  renderInviteResizable() {
+    const { chatWidth } = this.state;
+    const { isRTL } = this.props;
+
+    const resizableEnableOptions = {
+      top: false,
+      right: !isRTL,
+      bottom: false,
+      left: !!isRTL,
+      topRight: false,
+      bottomRight: false,
+      bottomLeft: false,
+      topLeft: false,
+    };
+
+    return (
+      <Resizable
+        minWidth={CHAT_MIN_WIDTH}
+        maxWidth={CHAT_MAX_WIDTH}
+        ref={(node) => { this.resizableChat = node; }}
+        enable={resizableEnableOptions}
+        key={this.chatKey}
+        size={{ width: chatWidth }}
+        onResize={dispatchResizeEvent}
+        onResizeStop={(e, direction, ref, d) => {
+          this.setState({
+            chatWidth: chatWidth + d.width,
+          });
+        }}
+      >
+        {this.renderInvite()}
+      </Resizable>
+    );
+  }
+
   renderNote() {
     const { intl, enableResize } = this.props;
 
@@ -353,6 +404,9 @@ class PanelManager extends PureComponent {
     );
   }
 
+
+
+
   renderBreakoutRoom() {
     return (
       <div className={styles.breakoutRoom} key={this.breakoutroomKey}>
@@ -406,16 +460,10 @@ class PanelManager extends PureComponent {
 
   render() {
     const { enableResize, openPanel } = this.props;
+    console.log('@vdo enableResize,openPanel',enableResize,openPanel)
     if (openPanel === '') return null;
     const panels = [];
-    if (enableResize) {
-      panels.push(
-        this.renderUserListResizable(),
-        <div className={styles.userlistPad} key={this.padKey} />,
-      );
-    } else {
-      panels.push(this.renderUserList());
-    }
+    
 
     if (openPanel === 'chat') {
       if (enableResize) {
@@ -462,6 +510,26 @@ class PanelManager extends PureComponent {
         panels.push(this.renderWaitingUsersPanelResizable());
       } else {
         panels.push(this.renderWaitingUsersPanel());
+      }
+    }
+
+    if (openPanel === 'invite') {
+      console.log('@vdo panel-manager invite');
+      if (enableResize) {
+        panels.push(this.renderInviteResizable());
+      } else {
+        panels.push(this.renderInvite());
+      }
+    }
+
+    if(openPanel && openPanel!=''){
+      if (enableResize) {
+        panels.push(
+          this.renderUserListResizable(),
+          <div className={styles.userlistPad} key={this.padKey} />,
+        );
+      } else {
+        panels.push(this.renderUserList());
       }
     }
 

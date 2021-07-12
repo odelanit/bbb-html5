@@ -95,7 +95,7 @@ class ActionsBar extends PureComponent {
           }}
           />
         </div>
-        <div className={styles.right}>
+        <div className={cx('vdo-presentation',styles.right)}>
           {isLayoutSwapped
             ? (
               <PresentationOptionsContainer

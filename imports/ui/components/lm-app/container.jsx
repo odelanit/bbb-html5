@@ -28,6 +28,13 @@ import NavBarContainer from '../lm-nav-bar/container';
 import ActionsBarContainer from '/imports/ui/components/lm-actions-bar/container';
 import MediaContainer from '../media/container';
 import UserListService from '../user-list/service';
+import PresentationService from '/imports/ui/components/presentation/service';
+import Presentations from '/imports/api/presentations';
+
+import MediaService, {
+    getSwapLayout,
+    shouldEnableSwapLayout,
+  } from '../media/service';
 
 const propTypes = {
     navbar: PropTypes.node,
@@ -135,6 +142,11 @@ export default injectIntl(withModalMounter(withTracker(({intl, baseControls}) =>
         handleNetworkConnection: () => updateNavigatorConnection(navigator.connection),
         users: UserListService.getUsers(),
         amIModerator: amIModerator(),
+        toggleSwapLayout: MediaService.toggleSwapLayout,
+        isThereCurrentPresentation: Presentations.findOne({ meetingId: Auth.meetingID, current: true },
+            { fields: {} }),
+        currentSlidHasContent: PresentationService.currentSlidHasContent(),
+        parseCurrentSlideContent: PresentationService.parseCurrentSlideContent,
     };
 })(AppContainer)));
 

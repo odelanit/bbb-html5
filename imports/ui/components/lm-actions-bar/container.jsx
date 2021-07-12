@@ -50,4 +50,5 @@ export default withTracker(() => ({
     { fields: {} }),
   allowExternalVideo: Meteor.settings.public.externalVideoPlayer.enabled,
   publicChat: Service.getPublicChat(),
+  openPanel: Session.get('openPanel')
 }))(injectIntl(ActionsBarContainer));

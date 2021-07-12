@@ -372,7 +372,7 @@
 .right-top  {
   @extend %left-caret;
   @extend %vert-top-caret;
-  transform: translateX(100%) translateY(0);
+  transform: translateX(-100%) translateY(0);
 }
 
 [dir="rtl"] .right-top {

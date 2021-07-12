@@ -31,6 +31,10 @@ main {
     overflow-y: hidden;
     overflow-x: hidden;
     background: white;
+    display: flex;
+    justify-content: space-between;
+    width: max-content;
+    float: right;
 }
 
 .navbar.call-m {
@@ -90,11 +94,11 @@ main {
     margin-right: 0;
 }
 
-.meeting-actions > * {
+.meeting-actions > *,.meeting-c > * {
     margin-right: 4px;
 }
 
-.meeting-actions > *:last-child {
+.meeting-actions > *:last-child,.meeting-c > *:last-child {
     margin-right: 0;
 }
 

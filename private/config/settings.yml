@@ -252,7 +252,7 @@ public:
     toggleRecording: false
     toggleSelfVoice: false
   poll:
-    enabled: false
+    enabled: true
     max_custom: 5
   captions:
     enabled: true
@@ -267,7 +267,7 @@ public:
   chat:
     enabled: true
     bufferChatInsertsMs: 0
-    startClosed: false
+    startClosed: true
     min_message_length: 1
     max_message_length: 5000
     grouping_messages_window: 10000
@@ -286,7 +286,7 @@ public:
     typingIndicator:
       enabled: true
   note:
-    enabled: false
+    enabled: true
     url: ETHERPAD_HOST
   layout:
     autoSwapLayout: true

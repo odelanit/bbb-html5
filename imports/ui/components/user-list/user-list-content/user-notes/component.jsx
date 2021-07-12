@@ -112,7 +112,6 @@ class UserNotes extends Component {
 
   render() {
     const { intl, disableNote } = this.props;
-
     if (!NoteService.isEnabled()) return null;
 
     return (

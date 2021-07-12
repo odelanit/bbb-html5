@@ -112,7 +112,7 @@ export default withModalMounter(withTracker(() => {
     children: <DefaultContent {...{ autoSwapLayout, hidePresentation }} />,
     audioModalIsOpen: Session.get('audioModalIsOpen'),
   };
-
+  console.log('@vdo media-container MediaService.shouldShowWhiteboard(),  hidePresentation',MediaService.shouldShowWhiteboard(),hidePresentation)
   if (MediaService.shouldShowWhiteboard() && !hidePresentation) {
     data.currentPresentation = MediaService.getPresentationInfo();
     data.children = <PresentationPodsContainer />;

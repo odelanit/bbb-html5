@@ -316,29 +316,50 @@ class App extends Component {
       />) : null);
   }
 
+  renderPanel() {
+    const { enableResize } = this.state;
+    const { openPanel, isRTL } = this.props;
+
+    return (
+      <PanelManager
+        {...{
+          openPanel,
+          enableResize,
+          isRTL,
+        }}
+        shouldAriaHide={this.shouldAriaHide}
+      />
+    );
+  }
+
+
   render() {
     const {
       customStyle,
       customStyleUrl,
+      openPanel, 
+      isRTL 
     } = this.props;
+    const { enableResize } = this.state;
     return (
       <main>
         {this.renderActivityCheck()}
         {this.renderUserInformation()}
         <BannerBarContainer/>
         <NotificationsBarContainer/>
-        <div id="wrapper" className="wrapper">
-          {this.renderNavBar()}
+        <section className="wrapper">
+       
+        {this.renderNavBar()}
           <div className="container is-fluid main">
             <div className="columns" style={{ height: '100%' }}>
-              <div
-                className={this.props.isPanelOpened ? 'column is-three-quarters meeting-main' : 'column meeting-main'}
-              >
+             <div className={this.props.isPanelOpened ? 'column is-three-quarters meeting-main' : 'column meeting-main'} >
                 <div className="meeting-media" style={{ height: 'calc(100% - 122px)' }}>
-                  {this.renderMedia()}
+                {this.renderMedia()}
+                 {/* {this.renderPanel()} */}
+                  
                 </div>
                 <div className="call-m py-5 px-3">
-                  <div className="columns">
+                  {/* <div className="columns">
                     <div className="column">
                       <div className="meeting-actions">
                         <div className="px-4">9:28</div>
@@ -348,10 +369,22 @@ class App extends Component {
                     <div className="column">
                       <UserListContainer/>
                     </div>
-                  </div>
+                  </div> */}
+
+                  <div className="columns">
+                    
+                        {this.renderActionsBar()}
+                  </div>    
                 </div>
               </div>
-              {this.props.isPanelOpened && (
+              <div className="column">
+                  
+                  <div className="meeting-sidebar">
+                    {this.renderPanel()}
+                  </div>
+              </div>
+              {/* {this.props.isPanelOpened  && (  */}
+              {/* { ( 
                 <div className="column">
                   <div className="meeting-sidebar">
                     {this.props.isChatBox && (
@@ -361,16 +394,22 @@ class App extends Component {
                       <InviteContainer/>
                     )}
                   </div>
+                  <div className="meeting-sidebar">
+                  {this.renderPanel()}
+                  </div>
                 </div>
-              )}
+                
+              )} */}
             </div>
+            
           </div>
           <footer className="footer is-fixed-bottom">
             <div className="content has-text-centered">
               <span>Copyright &copy; VDO, Quadridge Technologies Private Limited</span>
             </div>
           </footer>
-        </div>
+        </section>
+       
         <BreakoutRoomInvitation/>
         <PollingContainer/>
         <ModalContainer/>

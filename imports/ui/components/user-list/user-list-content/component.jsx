@@ -46,7 +46,6 @@ class UserContent extends PureComponent {
       pendingUsers,
       requestUserInformation,
     } = this.props;
-
     return (
       <div
         data-test="userListContent"

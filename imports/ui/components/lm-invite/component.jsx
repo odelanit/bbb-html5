@@ -36,7 +36,8 @@ class Invite extends React.Component {
     }
 
     handleClose = () => {
-        this.props.setPanelOpened(false)
+        Session.set('openPanel', 'userlist');
+        // this.props.setPanelOpened(false)
     }
 
     toggleInvite = async (contact) => {

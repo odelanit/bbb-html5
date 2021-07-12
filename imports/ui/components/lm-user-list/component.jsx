@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { injectIntl } from 'react-intl';
-import UserListItemContainer from './user-list-item/container';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
-import { connect } from 'react-redux';
-import { setChatBox, setInviteBox, setPanelOpened } from '/imports/redux/actions';
-
-const ROLE_MODERATOR = Meteor.settings.public.user.role_moderator;
+import injectWbResizeEvent from '/imports/ui/components/presentation/resize-wrapper/component';
+import { styles } from './styles.scss';
+import CustomLogo from './custom-logo/component';
+import UserContentContainer from './user-list-content/container';
 
 const propTypes = {
+  activeChats: PropTypes.arrayOf(String).isRequired,
   compact: PropTypes.bool,
   intl: PropTypes.shape({
     formatMessage: PropTypes.func.isRequired,
   }).isRequired,
-  currentUser: PropTypes.shape({}).isRequired,
-  users: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  CustomLogoUrl: PropTypes.string.isRequired,
+  isPublicChat: PropTypes.func.isRequired,
   setEmojiStatus: PropTypes.func.isRequired,
   roving: PropTypes.func.isRequired,
+  showBranding: PropTypes.bool.isRequired,
   requestUserInformation: PropTypes.func.isRequired,
 };
 
@@ -24,44 +24,41 @@ const defaultProps = {
   compact: false,
 };
 
-class UserList extends Component {
-  handleInviteClicked = () => {
-    this.props.setPanelOpened(true)
-    this.props.setChatBox(false)
-    this.props.setInviteBox(true)
-  };
-
+class UserList extends PureComponent {
   render() {
     const {
+      intl,
+      activeChats,
       compact,
       setEmojiStatus,
-      users,
+      isPublicChat,
+      roving,
+      CustomLogoUrl,
+      showBranding,
+      hasBreakoutRoom,
       requestUserInformation,
-      currentUser,
-      meetingIsBreakout,
     } = this.props;
     return (
-      <div className="meeting-c">
-        {currentUser.role === ROLE_MODERATOR && (
-          <figure className="image is-44x44" onClick={this.handleInviteClicked}>
-            <img src="img/TeamAdd.png"/>
-          </figure>
-        )}
+      <div className={styles.userList}>
         {
-          users.map((u, index) => (
-            <UserListItemContainer
-              {...{
-                compact,
-                setEmojiStatus,
-                requestUserInformation,
-                currentUser,
-                meetingIsBreakout,
-              }}
-              user={u}
-              key={index}
-            />
-          ))
+          showBranding
+            && !compact
+            && CustomLogoUrl
+            ? <CustomLogo CustomLogoUrl={CustomLogoUrl} /> : null
         }
+        {<UserContentContainer
+          {...{
+            intl,
+            activeChats,
+            compact,
+            setEmojiStatus,
+            isPublicChat,
+            roving,
+            hasBreakoutRoom,
+            requestUserInformation,
+          }
+          }
+        />}
       </div>
     );
   }
@@ -70,14 +67,4 @@ class UserList extends Component {
 UserList.propTypes = propTypes;
 UserList.defaultProps = defaultProps;
 
-const mapStateToProps = state => ({
-  isPanelOpened: state.panel.isPanelOpened,
-  isChatBox: state.panel.isChatBox,
-  isInviteBox: state.panel.isInviteBox,
-});
-
-export default connect(mapStateToProps, {
-  setPanelOpened,
-  setChatBox,
-  setInviteBox
-})(injectIntl(UserList));
+export default injectWbResizeEvent(injectIntl(UserList));
